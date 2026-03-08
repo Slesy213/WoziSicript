@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WoziScript | Premium Roblox Sistemleri</title>
+  <title>WoziScript | Ücretsiz Roblox Scriptleri</title>
   <style>
     :root{
       --bg:#050816;
       --bg2:#0b1120;
-      --card:rgba(10,16,34,.68);
+      --card:rgba(10,16,34,.78);
       --line:rgba(255,255,255,.10);
       --text:#f8fbff;
       --muted:#b7c4df;
@@ -36,7 +36,7 @@
       height:100%;
       object-fit:cover;
       z-index:-3;
-      filter:saturate(1.05) brightness(.45);
+      filter:saturate(1.05) brightness(.35);
     }
 
     .video-overlay{
@@ -46,7 +46,7 @@
       background:
         radial-gradient(circle at 15% 20%, rgba(53,231,255,.18), transparent 24%),
         radial-gradient(circle at 80% 15%, rgba(50,255,180,.14), transparent 24%),
-        linear-gradient(180deg, rgba(2,6,16,.45), rgba(2,6,16,.82) 55%, rgba(2,6,16,.96));
+        linear-gradient(180deg, rgba(2,6,16,.45), rgba(2,6,16,.82) 55%, rgba(2,6,16,.97));
       pointer-events:none;
     }
 
@@ -131,7 +131,7 @@
     }
 
     .hero h1{
-      font-size:66px;
+      font-size:64px;
       line-height:1.02;
       letter-spacing:-1.4px;
       margin-bottom:18px;
@@ -165,6 +165,7 @@
       border-radius:16px;
       font-weight:800;
       transition:.22s ease;
+      display:inline-block;
     }
 
     .btn-primary{
@@ -173,7 +174,7 @@
       box-shadow:0 0 28px rgba(53,231,255,.20);
     }
 
-    .btn-primary:hover,.product-btn:hover,.buy-btn:hover,.modal-buy:hover{
+    .btn-primary:hover,.copy-btn:hover{
       transform:translateY(-3px);
       box-shadow:0 16px 38px rgba(53,231,255,.16);
     }
@@ -209,7 +210,7 @@
 
     .stat span{color:#abc0df;font-size:13px}
 
-    .showcase{
+    .hero-panel{
       position:relative;
       background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
       border:1px solid var(--line);
@@ -219,7 +220,7 @@
       overflow:hidden;
     }
 
-    .showcase::before{
+    .hero-panel::before{
       content:"";
       position:absolute;
       width:320px;
@@ -246,7 +247,7 @@
       background:rgba(255,255,255,.18)
     }
 
-    .online{
+    .live-tag{
       font-size:12px;
       font-weight:800;
       color:#95ffd3;
@@ -279,12 +280,10 @@
 
     .featured-card h3{font-size:30px;margin-bottom:10px}
     .featured-card p{color:var(--muted);line-height:1.7;margin-bottom:18px}
-    .featured-price{font-size:34px;font-weight:900;color:var(--cyan);margin-bottom:18px}
 
     .featured-features{
       display:grid;
       gap:12px;
-      margin-bottom:18px;
     }
 
     .featured-features div{
@@ -307,39 +306,63 @@
     .section-head h2{font-size:42px;margin-bottom:12px}
     .section-head p{color:var(--muted);line-height:1.75}
 
-    .products{
+    .scripts{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
-      gap:24px;
+      gap:26px;
     }
 
-    .product{
+    .script-card{
       background:var(--card);
       border:1px solid var(--line);
-      border-radius:26px;
-      padding:24px;
+      border-radius:28px;
+      overflow:hidden;
       box-shadow:var(--shadow);
       backdrop-filter:blur(14px);
-      transition:.24s ease;
+    }
+
+    .script-top{
+      display:grid;
+      grid-template-columns:380px 1fr;
+      gap:0;
+    }
+
+    .script-image{
+      min-height:260px;
+      background:linear-gradient(135deg, rgba(53,231,255,.18), rgba(50,255,180,.10));
+      border-right:1px solid rgba(255,255,255,.08);
       position:relative;
       overflow:hidden;
     }
 
-    .product:hover{
-      transform:translateY(-8px);
-      border-color:rgba(53,231,255,.24);
+    .script-image img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
     }
 
-    .product::after{
-      content:"";
+    .image-placeholder{
       position:absolute;
-      width:180px;height:180px;
-      border-radius:50%;
-      background:radial-gradient(circle, rgba(53,231,255,.12), transparent 70%);
-      top:-70px;right:-70px;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:20px;
+      color:#bfefff;
+      font-weight:800;
+      font-size:22px;
+      letter-spacing:.4px;
+      background:
+        radial-gradient(circle at top left, rgba(53,231,255,.16), transparent 36%),
+        linear-gradient(135deg, rgba(9,15,32,.92), rgba(11,19,40,.92));
     }
 
-    .product-badge{
+    .script-content{
+      padding:26px;
+    }
+
+    .script-badge{
       display:inline-block;
       padding:7px 11px;
       border-radius:10px;
@@ -349,43 +372,77 @@
       background:rgba(53,231,255,.10);
       border:1px solid rgba(53,231,255,.16);
       color:#90f1ff;
-      position:relative;
-      z-index:1;
     }
 
-    .product h3{font-size:26px;margin-bottom:12px;position:relative;z-index:1}
-    .product p{color:var(--muted);line-height:1.7;margin-bottom:16px;position:relative;z-index:1}
-    .product-price{font-size:30px;font-weight:900;color:var(--cyan);margin-bottom:16px;position:relative;z-index:1}
+    .script-content h3{
+      font-size:30px;
+      margin-bottom:10px;
+    }
 
-    .product ul{list-style:none;margin-bottom:20px;position:relative;z-index:1}
-    .product li{margin-bottom:10px;color:#deebff;font-size:14px}
+    .script-content p{
+      color:var(--muted);
+      line-height:1.75;
+      margin-bottom:18px;
+    }
 
-    .product-actions{
+    .script-meta{
       display:flex;
-      gap:10px;
+      gap:12px;
       flex-wrap:wrap;
-      position:relative;
-      z-index:1;
+      margin-bottom:18px;
     }
 
-    .product-btn,.buy-btn,.modal-buy{
+    .script-meta span{
+      padding:9px 12px;
+      border-radius:12px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.07);
+      color:#dbe8ff;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .code-wrap{
+      border-top:1px solid rgba(255,255,255,.08);
+      padding:24px 26px 26px;
+    }
+
+    .code-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:14px;
+      flex-wrap:wrap;
+    }
+
+    .code-head h4{
+      font-size:20px;
+    }
+
+    .copy-btn{
       border:none;
       cursor:pointer;
-      padding:12px 16px;
+      padding:11px 16px;
       border-radius:14px;
       font-weight:800;
+      background:linear-gradient(90deg,var(--cyan),var(--mint));
+      color:#06111c;
       transition:.2s;
     }
 
-    .product-btn,.modal-buy{
-      background:linear-gradient(90deg,var(--cyan),var(--mint));
-      color:#06111c;
-    }
-
-    .buy-btn{
-      background:rgba(255,255,255,.05);
-      color:#eef7ff;
-      border:1px solid rgba(255,255,255,.10);
+    pre{
+      margin:0;
+      background:#07101f;
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:18px;
+      padding:18px;
+      overflow:auto;
+      color:#dff6ff;
+      font-size:14px;
+      line-height:1.65;
+      white-space:pre-wrap;
+      word-break:break-word;
     }
 
     .about-box,.contact-box{
@@ -421,97 +478,22 @@
       color:#99afd0;
     }
 
-    .modal{
-      position:fixed;
-      inset:0;
-      background:rgba(2,6,16,.72);
-      backdrop-filter:blur(10px);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:18px;
-      z-index:120;
-    }
-
-    .modal.show{display:flex}
-
-    .modal-card{
-      width:min(700px,100%);
-      background:linear-gradient(180deg, rgba(13,20,40,.98), rgba(7,12,25,.98));
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:28px;
-      box-shadow:0 28px 80px rgba(0,0,0,.52);
-      overflow:hidden;
-      position:relative;
-    }
-
-    .modal-top{
-      padding:22px 24px 16px;
-      display:flex;
-      justify-content:space-between;
-      align-items:start;
-      gap:14px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-    }
-
-    .modal-top h3{font-size:30px;margin-bottom:6px}
-    .modal-top p{color:var(--muted);line-height:1.6}
-    .close-modal{
-      width:42px;height:42px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.05);
-      color:#fff;
-      cursor:pointer;
-      font-size:20px;
-    }
-
-    .modal-body{padding:24px}
-    .modal-price{font-size:34px;font-weight:900;color:var(--cyan);margin-bottom:16px}
-
-    .modal-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
-      margin-bottom:22px;
-    }
-
-    .modal-panel{
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.04);
-      border-radius:18px;
-      padding:18px;
-    }
-
-    .modal-panel h4{font-size:16px;margin-bottom:12px}
-    .modal-panel ul{list-style:none}
-    .modal-panel li{margin-bottom:9px;color:#d9e6ff;font-size:14px;line-height:1.55}
-
-    .modal-bottom{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:18px;
-      flex-wrap:wrap;
-      padding-top:6px;
-    }
-
-    .modal-note{color:#9fb4d5;font-size:13px;line-height:1.6;max-width:360px}
-
     @media (max-width:1024px){
       .hero{grid-template-columns:1fr}
-      .hero h1{font-size:52px}
+      .hero h1{font-size:50px}
       .contact-grid{grid-template-columns:1fr}
+      .script-top{grid-template-columns:1fr}
+      .script-image{min-height:220px;border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}
     }
 
     @media (max-width:700px){
       .navbar{padding:16px 4%}
       .hero,section{padding-left:4%;padding-right:4%}
-      .hero h1{font-size:40px}
+      .hero h1{font-size:38px}
       .section-head h2{font-size:33px}
-      .modal-grid{grid-template-columns:1fr}
       .nav-links{gap:14px}
       .logo{font-size:24px}
+      .script-content h3{font-size:24px}
     }
   </style>
 </head>
@@ -526,119 +508,127 @@
     <div class="logo">WoziScript</div>
     <div class="nav-links">
       <a href="#home">Ana Sayfa</a>
-      <a href="#products">Ürünler</a>
-      <a href="#about">Hakkımızda</a>
-      <a href="#contact" class="nav-cta">Satın Al</a>
+      <a href="#scripts">Scriptler</a>
+      <a href="#about">Hakkımda</a>
+      <a href="#contact" class="nav-cta">İletişim</a>
     </div>
   </nav>
 
   <section class="hero" id="home">
     <div>
-      <div class="eyebrow">⚡ Premium Roblox Sistem Vitrini</div>
-      <h1>Oyunun için <span>profesyonel sistemler</span> sunan güçlü bir vitrin sitesi.</h1>
+      <div class="eyebrow">⚡ Ücretsiz Roblox Script Paylaşım Sitesi</div>
+      <h1>Yeni yaptığım <span>sistemleri bedava</span> burada paylaşıyorum.</h1>
       <p>
-        WoziScript; admin menüleri, araç sistemleri, anti-cheat yapıları ve özel script paketlerini modern bir tasarımla sunman için hazırlandı. Video arka plan, ürün popup'ları ve satın al butonlarıyla daha ciddi ve premium görünür.
+        WoziScript artık satış sitesi değil. Burada yaptığın yeni sistemlerin görselini koyabilir, altına açıklamasını yazabilir ve en alta script kodunu ekleyebilirsin. Ziyaretçiler kodu direkt kopyalayıp kullanabilir.
       </p>
       <div class="hero-actions">
-        <a href="#products" class="btn btn-primary">Ürünleri İncele</a>
-        <a href="#contact" class="btn btn-ghost">İletişime Geç</a>
+        <a href="#scripts" class="btn btn-primary">Scriptlere Git</a>
+        <a href="#contact" class="btn btn-ghost">Bana Ulaş</a>
       </div>
       <div class="hero-stats">
-        <div class="stat"><b>10+</b><span>Vitrin Sistemi</span></div>
-        <div class="stat"><b>Premium</b><span>Modern Tasarım</span></div>
-        <div class="stat"><b>Hazır</b><span>Tek Dosya Kurulum</span></div>
+        <div class="stat"><b>Bedava</b><span>Tüm paylaşımlar ücretsiz</span></div>
+        <div class="stat"><b>Kolay</b><span>Foto + açıklama + kod</span></div>
+        <div class="stat"><b>Hızlı</b><span>Kopyala yapıştır kullanım</span></div>
       </div>
     </div>
 
-    <div class="showcase">
+    <div class="hero-panel">
       <div class="window-bar">
         <div class="dots"><span></span><span></span><span></span></div>
-        <div class="online">● Sipariş Alınıyor</div>
+        <div class="live-tag">● Yeni Scriptler Eklenecek</div>
       </div>
       <div class="featured-card">
-        <span class="tag">ÖNE ÇIKAN ÜRÜN</span>
-        <h3>Premium Admin Menü V4</h3>
-        <p>Gelişmiş yönetim araçları, oyuncu işlem kartı, log paneli, yetkili sistemi ve şık arayüz ile öne çıkan admin paketi.</p>
-        <div class="featured-price">₺999</div>
+        <span class="tag">SİTE MANTIĞI</span>
+        <h3>Nasıl paylaşacaksın?</h3>
+        <p>Her yeni sistem için bir kart ekleyeceksin. Üste görsel, ortaya kısa bilgi, alta da kod kutusu gelecek. Kullanıcı butona basıp kodu kopyalayacak.</p>
         <div class="featured-features">
-          <div>✔ Kick / Ban / Freeze / Unfreeze</div>
-          <div>✔ Modern panel tasarımı ve canlı log kutusu</div>
-          <div>✔ Yetkili kadro bölümü ve oyuncu bilgi paneli</div>
-          <div>✔ Sunucu tarafıyla uyumlu geliştirilebilir yapı</div>
+          <div>✔ Script görseli ekleme alanı</div>
+          <div>✔ Sistem açıklaması ve özellikleri</div>
+          <div>✔ Altta uzun kod kutusu</div>
+          <div>✔ Tek tuşla kod kopyalama</div>
         </div>
-        <button class="product-btn" data-product="admin">Detayları Aç</button>
       </div>
     </div>
   </section>
 
-  <section id="products">
+  <section id="scripts">
     <div class="section-head">
-      <h2>Öne Çıkan Sistemler</h2>
-      <p>Her ürün kartında popup ile detay gösterebilir, satın al butonlarını Discord, WhatsApp, Tebex veya başka bir bağlantıya yönlendirebilirsin.</p>
+      <h2>Paylaşılan Scriptler</h2>
+      <p>Aşağıdaki yapı tamamen senin istediğin mantıkta hazırlandı. Yeni sistem yaptıkça bir kart daha çoğaltıp fotoğrafı ve kodu değiştirmen yeterli.</p>
     </div>
 
-    <div class="products">
-      <article class="product">
-        <span class="product-badge">POPÜLER</span>
-        <h3>Admin Menü V4</h3>
-        <p>Yetkili sistemi, gelişmiş log paneli, oyuncu bilgi kartı ve güçlü komut yapısıyla tam yönetim paketi.</p>
-        <div class="product-price">₺999</div>
-        <ul>
-          <li>• Oyuncu işlemleri ve kategorili menü</li>
-          <li>• Şık arayüz ve canlı log tasarımı</li>
-          <li>• Freeze / Unfreeze desteği</li>
-        </ul>
-        <div class="product-actions">
-          <button class="product-btn" data-product="admin">Popup Aç</button>
-          <a class="buy-btn" href="#contact">Satın Al</a>
+    <div class="scripts">
+      <article class="script-card">
+        <div class="script-top">
+          <div class="script-image">
+            <div class="image-placeholder">BURAYA<br>SCRİPT FOTOĞRAFI<br>EKLENECEK</div>
+            <!-- Örnek kullanım:
+            <img src="images/adminmenu.png" alt="Admin Menü Sistemi">
+            -->
+          </div>
+          <div class="script-content">
+            <span class="script-badge">ÖRNEK PAYLAŞIM</span>
+            <h3>Admin Menü Sistemi</h3>
+            <p>
+              Bu alana sistemin ne işe yaradığını yazarsın. Mesela oyuncu yönetimi, log sistemi, freeze komutu, bildirim sistemi gibi özellikleri burada tanıtırsın.
+            </p>
+            <div class="script-meta">
+              <span>Kategori: Admin</span>
+              <span>Sürüm: V1</span>
+              <span>Durum: Ücretsiz</span>
+            </div>
+          </div>
+        </div>
+        <div class="code-wrap">
+          <div class="code-head">
+            <h4>Sistem Kodu</h4>
+            <button class="copy-btn" onclick="copyCode('code1', this)">Kodu Kopyala</button>
+          </div>
+          <pre id="code1">-- Buraya kendi script kodunu yapıştıracaksın
+print("WoziScript Admin Menü Sistemi")
+
+local players = game:GetService("Players")
+local player = players.LocalPlayer
+
+print(player.Name .. " sistemi başlattı")</pre>
         </div>
       </article>
 
-      <article class="product">
-        <span class="product-badge">GÜVENLİK</span>
-        <h3>Anti-Cheat Paket</h3>
-        <p>Oyununu daha güvenli hale getirmek için temel koruma mantıkları ve sunucu taraflı destek yapısı.</p>
-        <div class="product-price">₺799</div>
-        <ul>
-          <li>• Şüpheli işlem kontrol mantığı</li>
-          <li>• Geliştirilebilir koruma yapısı</li>
-          <li>• Sunucu odaklı tasarım</li>
-        </ul>
-        <div class="product-actions">
-          <button class="product-btn" data-product="anticheat">Popup Aç</button>
-          <a class="buy-btn" href="#contact">Satın Al</a>
+      <article class="script-card">
+        <div class="script-top">
+          <div class="script-image">
+            <div class="image-placeholder">BURAYA<br>2. SİSTEMİN<br>GÖRSELİ</div>
+            <!-- Örnek kullanım:
+            <img src="images/siren.png" alt="Siren Sistemi">
+            -->
+          </div>
+          <div class="script-content">
+            <span class="script-badge">YENİ SİSTEM</span>
+            <h3>Araç & Siren Sistemi</h3>
+            <p>
+              Bu bölüme ikinci sistemin açıklamasını yazarsın. Örnek olarak Y tuşu ile siren açma kapama, araç içi kullanım ve ses sistemi gibi detayları ekleyebilirsin.
+            </p>
+            <div class="script-meta">
+              <span>Kategori: Araç</span>
+              <span>Sürüm: V1</span>
+              <span>Durum: Ücretsiz</span>
+            </div>
+          </div>
         </div>
-      </article>
+        <div class="code-wrap">
+          <div class="code-head">
+            <h4>Sistem Kodu</h4>
+            <button class="copy-btn" onclick="copyCode('code2', this)">Kodu Kopyala</button>
+          </div>
+          <pre id="code2">-- Buraya ikinci sisteminin kodunu yapıştır
+print("WoziScript Siren Sistemi")
 
-      <article class="product">
-        <span class="product-badge">ARAÇ</span>
-        <h3>Araç & Siren Sistemleri</h3>
-        <p>Çakar, siren, araç ışıkları ve tuş kontrollü sistemler için düzenli ve premium bir paket görünümü.</p>
-        <div class="product-price">₺549</div>
-        <ul>
-          <li>• Toggle siren yapısı</li>
-          <li>• Araç uyumlu kullanım mantığı</li>
-          <li>• Düzenlenebilir sistem altyapısı</li>
-        </ul>
-        <div class="product-actions">
-          <button class="product-btn" data-product="vehicle">Popup Aç</button>
-          <a class="buy-btn" href="#contact">Satın Al</a>
-        </div>
-      </article>
+local sirenOn = false
 
-      <article class="product">
-        <span class="product-badge">ÖZEL</span>
-        <h3>Özel Script Paketi</h3>
-        <p>Kendi oyununa özel bir sistem, panel ya da script yaptırmak için teklif odaklı vitrin kartı.</p>
-        <div class="product-price">Teklif Al</div>
-        <ul>
-          <li>• İsteğe özel sistem tasarımı</li>
-          <li>• Arayüz + script paketi</li>
-          <li>• Geliştirilebilir teslim yapısı</li>
-        </ul>
-        <div class="product-actions">
-          <button class="product-btn" data-product="custom">Popup Aç</button>
-          <a class="buy-btn" href="#contact">Satın Al</a>
+function toggleSiren()
+    sirenOn = not sirenOn
+    print("Siren durumu:", sirenOn)
+end</pre>
         </div>
       </article>
     </div>
@@ -647,185 +637,54 @@
   <section id="about">
     <div class="section-head">
       <h2>WoziScript Nedir?</h2>
-      <p>Bu sayfa portföy gibi de kullanılabilir, satış vitrini gibi de. Video arka plan sayesinde daha premium görünür; ürün popup'ları sayesinde kartları kalabalık yapmadan detay gösterebilirsin.</p>
+      <p>Bu site Roblox scriptlerini ücretsiz paylaşman için hazırlandı. Mantık çok basit: görsel koy, açıklama yaz, kodu alta ekle.</p>
     </div>
     <div class="about-box">
-      WoziScript, Roblox için geliştirdiğin sistemleri daha ciddi ve profesyonel göstermek amacıyla hazırlanmış tek dosyalık bir vitrin sayfasıdır. Ürün kartlarına tıklanınca popup açılır, satın al butonları iletişim bölümüne gider. İstersen bu butonları doğrudan Discord sunucuna, sipariş formuna ya da başka bir satış bağlantısına yönlendirebilirsin.
+      WoziScript, yaptığın sistemleri düzenli ve profesyonel şekilde paylaşman için oluşturulmuş bir script vitrin sitesidir. Burada satış, fiyat ve ürün popup mantığı kaldırıldı. Onun yerine ziyaretçilerin görseli görüp açıklamayı okuyacağı ve en altta kodu direkt kopyalayabileceği sade ama güçlü bir yapı kuruldu.
     </div>
   </section>
 
   <section id="contact">
     <div class="section-head">
-      <h2>Satın Al / İletişim</h2>
-      <p>Aşağıdaki bağlantıları kendi Discord, GitHub veya sipariş linklerinle değiştir.</p>
+      <h2>İletişim</h2>
+      <p>İstersen buraya Discord, GitHub veya başka sosyal medya linklerini ekleyebilirsin.</p>
     </div>
     <div class="contact-grid">
       <div class="contact-box">
-        <h3>Sipariş Hattı</h3>
-        <p>Buraya kendi sipariş alma yöntemini ekle. Discord en kolayı olur.</p>
+        <h3>Bana Ulaş</h3>
+        <p>Yeni sistem önerileri, destek veya iletişim için kendi linklerini buraya koy.</p>
         <p><a href="#">Discord: discord.gg/ornek</a></p>
         <p><a href="#">GitHub: github.com/Slesy213</a></p>
-        <p><a href="#">Satın Al Formu: linkini buraya ekle</a></p>
       </div>
       <div class="contact-box">
-        <h3>Kullanım Notu</h3>
-        <p>Video değiştirmek istersen en üstteki <b>video source</b> satırını değiştirmen yeterli. Ürün popup içerikleri ise aşağıdaki JavaScript kısmındaki ürün verilerinden geliyor.</p>
-        <p>Fiyatları, açıklamaları ve satın al bağlantılarını tek yerden rahatça düzenleyebilirsin.</p>
+        <h3>Nasıl yeni script eklersin?</h3>
+        <p>Mevcut script kartını kopyala, başlığı değiştir, açıklamayı değiştir, fotoğrafı ekle ve en alttaki kodu yeni scriptinle değiştir. Bu kadar.</p>
+        <p>İstersen daha sonra kategori filtresi, arama kutusu ve indirme butonu da eklenebilir.</p>
       </div>
     </div>
   </section>
 
   <footer>
-    © 2026 WoziScript — Premium Roblox Sistem Vitrini
+    © 2026 WoziScript — Ücretsiz Roblox Script Paylaşım Sitesi
   </footer>
 
-  <div class="modal" id="productModal">
-    <div class="modal-card">
-      <div class="modal-top">
-        <div>
-          <h3 id="modalTitle">Ürün Başlığı</h3>
-          <p id="modalDesc">Ürün açıklaması burada görünecek.</p>
-        </div>
-        <button class="close-modal" id="closeModal">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="modal-price" id="modalPrice">₺0</div>
-        <div class="modal-grid">
-          <div class="modal-panel">
-            <h4>Özellikler</h4>
-            <ul id="modalFeatures"></ul>
-          </div>
-          <div class="modal-panel">
-            <h4>Teslim İçeriği</h4>
-            <ul id="modalDelivery"></ul>
-          </div>
-        </div>
-        <div class="modal-bottom">
-          <div class="modal-note">Satın al butonunu kendi Discord ya da sipariş linkine yönlendirebilirsin. Bu yapı sadece profesyonel bir vitrin görünümü vermek için hazırlandı.</div>
-          <a class="modal-buy" id="modalBuy" href="#contact">Satın Al</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script>
-    const products = {
-      admin: {
-        title: 'Premium Admin Menü V4',
-        desc: 'Gelişmiş komut yapısı, güçlü log alanı ve yetkili yönetim sistemiyle sunucun için premium admin paneli.',
-        price: '₺999',
-        features: [
-          'Kick / Ban / Freeze / Unfreeze işlemleri',
-          'Canlı log kutusu ve işlem takibi',
-          'Oyuncu bilgi kartı ve yönetim araçları',
-          'Kategori yapılı modern panel tasarımı'
-        ],
-        delivery: [
-          'Kuruluma uygun script dosyaları',
-          'Düzenlenebilir yapı ve basit entegrasyon',
-          'Arayüz tasarımıyla birlikte vitrin görünümü',
-          'İsteğe göre ek geliştirme yapılabilir'
-        ],
-        buy: '#contact'
-      },
-      anticheat: {
-        title: 'Anti-Cheat Paket',
-        desc: 'Oyununda kontrolü artırmak ve kötüye kullanımları azaltmak için hazırlanmış güvenlik odaklı paket.',
-        price: '₺799',
-        features: [
-          'Temel koruma mantığı',
-          'Şüpheli hareket kontrol yaklaşımı',
-          'Sunucu tarafıyla uyumlu yapı',
-          'Geliştirilmeye açık sistem iskeleti'
-        ],
-        delivery: [
-          'Kurulum için düzenli dosya yapısı',
-          'Açıklama eklenebilir özelleştirilebilir içerik',
-          'İleri sürüm için uygun temel',
-          'Vitrin sayfasına özel ürün detayı'
-        ],
-        buy: '#contact'
-      },
-      vehicle: {
-        title: 'Araç & Siren Sistemleri',
-        desc: 'Çakar, siren, ışık ve araç kullanım mantığıyla roleplay veya servis oyunları için şık sistem paketi.',
-        price: '₺549',
-        features: [
-          'Toggle siren kullanım mantığı',
-          'Araç içinde çalışmaya uygun sistem akışı',
-          'Tuş bazlı kullanım yapısı',
-          'Düzenlenebilir ve geliştirilebilir içerik'
-        ],
-        delivery: [
-          'Kurulum için temel sistem dosyaları',
-          'Satış vitrinine uyumlu ürün kartı',
-          'Popup detay içerikleri',
-          'Görsel olarak premium sunum'
-        ],
-        buy: '#contact'
-      },
-      custom: {
-        title: 'Özel Script Paketi',
-        desc: 'Kendi oyununa özel panel, arayüz veya sistem yaptırmak için teklif tabanlı özel çalışma paketi.',
-        price: 'Teklif Al',
-        features: [
-          'İsteğe göre sistem planı',
-          'Özel panel veya arayüz',
-          'Ürüne özel görsel vitrin kartı',
-          'Daha esnek geliştirme süreci'
-        ],
-        delivery: [
-          'İhtiyaca göre şekillenen içerik',
-          'Ürün kartı + detay popup sunumu',
-          'Satın al yönlendirmesi',
-          'Daha premium portföy görünümü'
-        ],
-        buy: '#contact'
+    async function copyCode(codeId, button){
+      const code = document.getElementById(codeId).innerText;
+      try{
+        await navigator.clipboard.writeText(code);
+        const oldText = button.textContent;
+        button.textContent = 'Kopyalandı';
+        setTimeout(() => {
+          button.textContent = oldText;
+        }, 1800);
+      }catch(err){
+        button.textContent = 'Kopyalanamadı';
+        setTimeout(() => {
+          button.textContent = 'Kodu Kopyala';
+        }, 1800);
       }
-    };
-
-    const modal = document.getElementById('productModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalDesc = document.getElementById('modalDesc');
-    const modalPrice = document.getElementById('modalPrice');
-    const modalFeatures = document.getElementById('modalFeatures');
-    const modalDelivery = document.getElementById('modalDelivery');
-    const modalBuy = document.getElementById('modalBuy');
-    const closeModal = document.getElementById('closeModal');
-
-    function renderList(target, items){
-      target.innerHTML = items.map(item => `<li>• ${item}</li>`).join('');
     }
-
-    document.querySelectorAll('[data-product]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const key = btn.dataset.product;
-        const product = products[key];
-        if(!product) return;
-        modalTitle.textContent = product.title;
-        modalDesc.textContent = product.desc;
-        modalPrice.textContent = product.price;
-        renderList(modalFeatures, product.features);
-        renderList(modalDelivery, product.delivery);
-        modalBuy.setAttribute('href', product.buy);
-        modal.classList.add('show');
-        document.body.style.overflow = 'hidden';
-      });
-    });
-
-    function hideModal(){
-      modal.classList.remove('show');
-      document.body.style.overflow = '';
-    }
-
-    closeModal.addEventListener('click', hideModal);
-    modal.addEventListener('click', (e) => {
-      if(e.target === modal) hideModal();
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if(e.key === 'Escape') hideModal();
-    });
   </script>
 </body>
 </html>
