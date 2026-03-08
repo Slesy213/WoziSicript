@@ -3,195 +3,235 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WoziScript</title>
+  <title>WoziScript | Premium Roblox Sistemleri</title>
   <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:Arial, Helvetica, sans-serif;
+    :root{
+      --bg:#050816;
+      --bg2:#0b1120;
+      --card:rgba(10,16,34,.68);
+      --line:rgba(255,255,255,.10);
+      --text:#f8fbff;
+      --muted:#b7c4df;
+      --cyan:#35e7ff;
+      --mint:#32ffb4;
+      --shadow:0 20px 60px rgba(0,0,0,.38);
     }
 
-    html{
-      scroll-behavior:smooth;
-    }
-
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
-      background:
-        radial-gradient(circle at top left, rgba(0,255,200,0.12), transparent 30%),
-        radial-gradient(circle at top right, rgba(0,140,255,0.12), transparent 30%),
-        linear-gradient(135deg, #050816 0%, #0a1022 45%, #0d132b 100%);
-      color:#fff;
-      min-height:100vh;
+      font-family:Arial,Helvetica,sans-serif;
+      background:var(--bg);
+      color:var(--text);
       overflow-x:hidden;
     }
 
-    a{
-      text-decoration:none;
-      color:inherit;
+    a{text-decoration:none;color:inherit}
+    button{font:inherit}
+
+    #bgVideo{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      z-index:-3;
+      filter:saturate(1.05) brightness(.45);
+    }
+
+    .video-overlay{
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(53,231,255,.18), transparent 24%),
+        radial-gradient(circle at 80% 15%, rgba(50,255,180,.14), transparent 24%),
+        linear-gradient(180deg, rgba(2,6,16,.45), rgba(2,6,16,.82) 55%, rgba(2,6,16,.96));
+      pointer-events:none;
+    }
+
+    .grid-overlay{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size:36px 36px;
+      mask-image:linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,.15));
+      pointer-events:none;
     }
 
     .navbar{
-      width:100%;
-      padding:18px 6%;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
       position:sticky;
       top:0;
-      z-index:999;
-      background:rgba(5,8,22,0.78);
-      backdrop-filter:blur(12px);
-      border-bottom:1px solid rgba(255,255,255,0.06);
+      z-index:50;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:18px 6%;
+      background:rgba(4,8,20,.72);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(255,255,255,.08);
     }
 
     .logo{
       font-size:30px;
-      font-weight:800;
-      letter-spacing:1px;
-      color:#00e0ff;
-      text-shadow:0 0 18px rgba(0,224,255,0.35);
+      font-weight:900;
+      letter-spacing:.5px;
+      color:var(--cyan);
+      text-shadow:0 0 18px rgba(53,231,255,.35);
     }
 
     .nav-links{
       display:flex;
-      gap:26px;
+      gap:24px;
       align-items:center;
       flex-wrap:wrap;
     }
 
     .nav-links a{
-      color:#dce7ff;
+      color:#dbe7ff;
       font-size:15px;
-      transition:.25s;
+      transition:.2s;
     }
 
-    .nav-links a:hover{
-      color:#00e0ff;
-    }
+    .nav-links a:hover{color:var(--cyan)}
 
-    .nav-btn{
-      background:linear-gradient(90deg,#00e0ff,#00ffaa);
-      color:#05111e !important;
+    .nav-cta{
       padding:11px 18px;
-      border-radius:12px;
-      font-weight:700;
-      box-shadow:0 0 18px rgba(0,224,255,0.18);
+      border-radius:14px;
+      background:linear-gradient(90deg,var(--cyan),var(--mint));
+      color:#07111d !important;
+      font-weight:800;
+      box-shadow:0 0 24px rgba(53,231,255,.22);
     }
 
     .hero{
-      width:100%;
-      padding:90px 6% 70px;
+      min-height:calc(100vh - 76px);
       display:grid;
-      grid-template-columns:1.15fr 0.85fr;
-      gap:35px;
+      grid-template-columns:1.1fr .9fr;
+      gap:30px;
       align-items:center;
-      min-height:calc(100vh - 80px);
+      padding:72px 6% 56px;
     }
 
-    .hero-text h1{
-      font-size:62px;
-      line-height:1.05;
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border:1px solid rgba(53,231,255,.22);
+      background:rgba(53,231,255,.08);
+      color:#9df4ff;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:800;
+      margin-bottom:20px;
+    }
+
+    .hero h1{
+      font-size:66px;
+      line-height:1.02;
+      letter-spacing:-1.4px;
       margin-bottom:18px;
+      max-width:780px;
     }
 
-    .hero-text h1 span{
-      color:#00e0ff;
-      text-shadow:0 0 20px rgba(0,224,255,0.35);
+    .hero h1 span{
+      color:var(--cyan);
+      text-shadow:0 0 24px rgba(53,231,255,.28);
     }
 
-    .hero-text p{
-      color:#b8c6e4;
+    .hero p{
+      color:var(--muted);
       font-size:18px;
-      line-height:1.7;
-      max-width:680px;
-      margin-bottom:28px;
+      line-height:1.75;
+      max-width:720px;
+      margin-bottom:26px;
     }
 
-    .hero-buttons{
+    .hero-actions{
       display:flex;
-      gap:15px;
       flex-wrap:wrap;
-      margin-bottom:28px;
+      gap:14px;
+      margin-bottom:26px;
     }
 
     .btn{
-      display:inline-block;
+      border:none;
+      cursor:pointer;
       padding:14px 22px;
-      border-radius:14px;
-      font-weight:700;
-      transition:.25s;
+      border-radius:16px;
+      font-weight:800;
+      transition:.22s ease;
     }
 
     .btn-primary{
-      background:linear-gradient(90deg,#00e0ff,#00ffaa);
-      color:#07111a;
-      box-shadow:0 0 22px rgba(0,224,255,0.18);
+      background:linear-gradient(90deg,var(--cyan),var(--mint));
+      color:#06111d;
+      box-shadow:0 0 28px rgba(53,231,255,.20);
     }
 
-    .btn-primary:hover{
+    .btn-primary:hover,.product-btn:hover,.buy-btn:hover,.modal-buy:hover{
       transform:translateY(-3px);
-      box-shadow:0 12px 30px rgba(0,224,255,0.18);
+      box-shadow:0 16px 38px rgba(53,231,255,.16);
     }
 
-    .btn-secondary{
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(255,255,255,0.04);
-      color:#fff;
+    .btn-ghost{
+      background:rgba(255,255,255,.045);
+      color:#eef7ff;
+      border:1px solid rgba(255,255,255,.10);
     }
 
-    .btn-secondary:hover{
-      transform:translateY(-3px);
-      border-color:rgba(0,224,255,0.35);
-    }
-
-    .stats{
+    .hero-stats{
       display:flex;
-      gap:18px;
+      gap:16px;
       flex-wrap:wrap;
-      margin-top:20px;
+      margin-top:14px;
     }
 
     .stat{
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.08);
-      padding:16px 18px;
-      border-radius:18px;
-      min-width:145px;
-      backdrop-filter:blur(10px);
+      min-width:150px;
+      padding:17px 18px;
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:rgba(7,12,25,.48);
+      backdrop-filter:blur(12px);
     }
 
-    .stat h3{
-      font-size:25px;
-      color:#00e0ff;
+    .stat b{
+      display:block;
+      font-size:26px;
       margin-bottom:6px;
+      color:var(--cyan);
     }
 
-    .stat p{
-      font-size:13px;
-      color:#aebbd7;
-      margin:0;
-    }
+    .stat span{color:#abc0df;font-size:13px}
 
-    .hero-card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:28px;
-      padding:28px;
-      box-shadow:0 25px 60px rgba(0,0,0,0.35);
+    .showcase{
       position:relative;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border:1px solid var(--line);
+      border-radius:30px;
+      padding:26px;
+      box-shadow:var(--shadow);
       overflow:hidden;
     }
 
-    .hero-card::before{
+    .showcase::before{
       content:"";
       position:absolute;
-      inset:-80px;
-      background:radial-gradient(circle, rgba(0,224,255,0.11), transparent 40%);
+      width:320px;
+      height:320px;
+      right:-90px;
+      top:-90px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(53,231,255,.22), transparent 68%);
       pointer-events:none;
     }
 
-    .panel-top{
+    .window-bar{
       display:flex;
       justify-content:space-between;
       align-items:center;
@@ -200,432 +240,592 @@
       z-index:1;
     }
 
-    .panel-tag{
-      background:rgba(0,224,255,0.12);
-      color:#7cefff;
-      border:1px solid rgba(0,224,255,0.25);
-      padding:8px 12px;
-      border-radius:10px;
-      font-size:13px;
-      font-weight:700;
+    .dots{display:flex;gap:8px}
+    .dots span{
+      width:11px;height:11px;border-radius:50%;display:block;
+      background:rgba(255,255,255,.18)
     }
 
-    .panel-price{
-      font-size:28px;
+    .online{
+      font-size:12px;
       font-weight:800;
-      color:#fff;
+      color:#95ffd3;
+      background:rgba(50,255,180,.10);
+      border:1px solid rgba(50,255,180,.20);
+      padding:8px 12px;
+      border-radius:999px;
     }
 
-    .product-box{
-      background:rgba(8,16,35,0.72);
-      border:1px solid rgba(255,255,255,0.06);
-      border-radius:20px;
-      padding:22px;
-      margin-top:14px;
+    .featured-card{
       position:relative;
       z-index:1;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(5,10,24,.78);
+      border-radius:24px;
+      padding:24px;
     }
 
-    .product-box h3{
-      font-size:26px;
-      margin-bottom:10px;
+    .featured-card .tag{
+      display:inline-block;
+      padding:7px 12px;
+      border-radius:10px;
+      background:rgba(53,231,255,.12);
+      border:1px solid rgba(53,231,255,.16);
+      color:#88f1ff;
+      font-size:12px;
+      font-weight:900;
+      margin-bottom:14px;
     }
 
-    .product-box p{
-      color:#b9c7e5;
-      line-height:1.6;
-      margin-bottom:16px;
+    .featured-card h3{font-size:30px;margin-bottom:10px}
+    .featured-card p{color:var(--muted);line-height:1.7;margin-bottom:18px}
+    .featured-price{font-size:34px;font-weight:900;color:var(--cyan);margin-bottom:18px}
+
+    .featured-features{
+      display:grid;
+      gap:12px;
+      margin-bottom:18px;
     }
 
-    .feature-list{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
-    .feature-item{
-      background:rgba(255,255,255,0.04);
-      border:1px solid rgba(255,255,255,0.05);
-      padding:12px 14px;
-      border-radius:12px;
-      color:#dce6ff;
+    .featured-features div{
+      padding:13px 14px;
+      border-radius:14px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.05);
+      color:#e4efff;
       font-size:14px;
     }
 
-    section{
-      padding:80px 6%;
-    }
+    section{padding:86px 6%}
 
-    .section-title{
+    .section-head{
       text-align:center;
-      margin-bottom:45px;
+      max-width:820px;
+      margin:0 auto 42px;
     }
 
-    .section-title h2{
-      font-size:42px;
-      margin-bottom:10px;
-    }
+    .section-head h2{font-size:42px;margin-bottom:12px}
+    .section-head p{color:var(--muted);line-height:1.75}
 
-    .section-title p{
-      color:#aebbd7;
-      max-width:760px;
-      margin:0 auto;
-      line-height:1.7;
-    }
-
-    .cards{
+    .products{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
       gap:24px;
     }
 
-    .card{
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:24px;
-      padding:26px;
-      transition:.25s;
-      box-shadow:0 10px 30px rgba(0,0,0,0.18);
+    .product{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:26px;
+      padding:24px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+      transition:.24s ease;
+      position:relative;
+      overflow:hidden;
     }
 
-    .card:hover{
+    .product:hover{
       transform:translateY(-8px);
-      border-color:rgba(0,224,255,0.22);
-      box-shadow:0 18px 40px rgba(0,0,0,0.28);
+      border-color:rgba(53,231,255,.24);
     }
 
-    .card .mini-tag{
+    .product::after{
+      content:"";
+      position:absolute;
+      width:180px;height:180px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(53,231,255,.12), transparent 70%);
+      top:-70px;right:-70px;
+    }
+
+    .product-badge{
       display:inline-block;
-      padding:7px 12px;
-      background:rgba(0,224,255,0.11);
-      border:1px solid rgba(0,224,255,0.16);
-      color:#76f3ff;
+      padding:7px 11px;
       border-radius:10px;
       font-size:12px;
-      font-weight:700;
-      margin-bottom:16px;
+      font-weight:900;
+      margin-bottom:14px;
+      background:rgba(53,231,255,.10);
+      border:1px solid rgba(53,231,255,.16);
+      color:#90f1ff;
+      position:relative;
+      z-index:1;
     }
 
-    .card h3{
-      font-size:25px;
-      margin-bottom:12px;
+    .product h3{font-size:26px;margin-bottom:12px;position:relative;z-index:1}
+    .product p{color:var(--muted);line-height:1.7;margin-bottom:16px;position:relative;z-index:1}
+    .product-price{font-size:30px;font-weight:900;color:var(--cyan);margin-bottom:16px;position:relative;z-index:1}
+
+    .product ul{list-style:none;margin-bottom:20px;position:relative;z-index:1}
+    .product li{margin-bottom:10px;color:#deebff;font-size:14px}
+
+    .product-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      position:relative;
+      z-index:1;
     }
 
-    .card p{
-      color:#b6c3df;
-      line-height:1.7;
-      margin-bottom:18px;
-    }
-
-    .price{
-      font-size:28px;
+    .product-btn,.buy-btn,.modal-buy{
+      border:none;
+      cursor:pointer;
+      padding:12px 16px;
+      border-radius:14px;
       font-weight:800;
-      color:#00e0ff;
-      margin-bottom:16px;
+      transition:.2s;
     }
 
-    .card ul{
-      list-style:none;
-      margin-bottom:22px;
+    .product-btn,.modal-buy{
+      background:linear-gradient(90deg,var(--cyan),var(--mint));
+      color:#06111c;
     }
 
-    .card ul li{
-      color:#d9e5ff;
-      margin-bottom:10px;
-      font-size:14px;
+    .buy-btn{
+      background:rgba(255,255,255,.05);
+      color:#eef7ff;
+      border:1px solid rgba(255,255,255,.10);
     }
 
-    .card-btn{
-      display:inline-block;
-      padding:12px 18px;
-      border-radius:12px;
-      background:linear-gradient(90deg,#00e0ff,#00ffaa);
-      color:#05111d;
-      font-weight:800;
-    }
-
-    .about-box{
-      max-width:950px;
+    .about-box,.contact-box{
+      max-width:980px;
       margin:0 auto;
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.08);
-      padding:35px;
+      background:var(--card);
+      border:1px solid var(--line);
       border-radius:28px;
-      text-align:center;
+      padding:34px;
+      box-shadow:var(--shadow);
+      color:#d8e5fb;
       line-height:1.8;
-      color:#c9d5ee;
+      backdrop-filter:blur(12px);
     }
 
-    .contact-wrap{
+    .contact-grid{
+      max-width:1040px;
+      margin:0 auto;
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:24px;
-      align-items:stretch;
     }
 
-    .contact-card{
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:24px;
-      padding:28px;
-    }
-
-    .contact-card h3{
-      font-size:27px;
-      margin-bottom:12px;
-    }
-
-    .contact-card p{
-      color:#b6c3df;
-      line-height:1.7;
-      margin-bottom:18px;
-    }
-
-    .contact-card a{
-      display:inline-block;
-      margin-top:8px;
-      color:#00e0ff;
-      font-weight:700;
-    }
+    .contact-box h3{font-size:28px;margin-bottom:10px}
+    .contact-box p{color:var(--muted);margin-bottom:12px}
+    .contact-box a{color:var(--cyan);font-weight:800}
 
     footer{
       padding:28px 6%;
-      border-top:1px solid rgba(255,255,255,0.06);
       text-align:center;
-      color:#95a6cb;
-      background:rgba(255,255,255,0.02);
+      border-top:1px solid rgba(255,255,255,.08);
+      background:rgba(0,0,0,.18);
+      color:#99afd0;
     }
 
-    @media(max-width:980px){
-      .hero{
-        grid-template-columns:1fr;
-        padding-top:70px;
-      }
-
-      .hero-text h1{
-        font-size:48px;
-      }
-
-      .contact-wrap{
-        grid-template-columns:1fr;
-      }
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(2,6,16,.72);
+      backdrop-filter:blur(10px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:120;
     }
 
-    @media(max-width:600px){
-      .navbar{
-        padding:16px 4%;
-      }
+    .modal.show{display:flex}
 
-      .logo{
-        font-size:24px;
-      }
+    .modal-card{
+      width:min(700px,100%);
+      background:linear-gradient(180deg, rgba(13,20,40,.98), rgba(7,12,25,.98));
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:28px;
+      box-shadow:0 28px 80px rgba(0,0,0,.52);
+      overflow:hidden;
+      position:relative;
+    }
 
-      .nav-links{
-        gap:14px;
-      }
+    .modal-top{
+      padding:22px 24px 16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:start;
+      gap:14px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
 
-      .hero{
-        padding:55px 4% 50px;
-      }
+    .modal-top h3{font-size:30px;margin-bottom:6px}
+    .modal-top p{color:var(--muted);line-height:1.6}
+    .close-modal{
+      width:42px;height:42px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
+      color:#fff;
+      cursor:pointer;
+      font-size:20px;
+    }
 
-      section{
-        padding:60px 4%;
-      }
+    .modal-body{padding:24px}
+    .modal-price{font-size:34px;font-weight:900;color:var(--cyan);margin-bottom:16px}
 
-      .hero-text h1{
-        font-size:38px;
-      }
+    .modal-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      margin-bottom:22px;
+    }
 
-      .section-title h2{
-        font-size:32px;
-      }
+    .modal-panel{
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.04);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .modal-panel h4{font-size:16px;margin-bottom:12px}
+    .modal-panel ul{list-style:none}
+    .modal-panel li{margin-bottom:9px;color:#d9e6ff;font-size:14px;line-height:1.55}
+
+    .modal-bottom{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+      flex-wrap:wrap;
+      padding-top:6px;
+    }
+
+    .modal-note{color:#9fb4d5;font-size:13px;line-height:1.6;max-width:360px}
+
+    @media (max-width:1024px){
+      .hero{grid-template-columns:1fr}
+      .hero h1{font-size:52px}
+      .contact-grid{grid-template-columns:1fr}
+    }
+
+    @media (max-width:700px){
+      .navbar{padding:16px 4%}
+      .hero,section{padding-left:4%;padding-right:4%}
+      .hero h1{font-size:40px}
+      .section-head h2{font-size:33px}
+      .modal-grid{grid-template-columns:1fr}
+      .nav-links{gap:14px}
+      .logo{font-size:24px}
     }
   </style>
 </head>
 <body>
+  <video autoplay muted loop playsinline id="bgVideo">
+    <source src="https://cdn.coverr.co/videos/coverr-programming-on-a-computer-1561087232142?download=1080p" type="video/mp4">
+  </video>
+  <div class="video-overlay"></div>
+  <div class="grid-overlay"></div>
 
   <nav class="navbar">
     <div class="logo">WoziScript</div>
     <div class="nav-links">
       <a href="#home">Ana Sayfa</a>
-      <a href="#systems">Sistemler</a>
+      <a href="#products">Ürünler</a>
       <a href="#about">Hakkımızda</a>
-      <a href="#contact" class="nav-btn">İletişim</a>
+      <a href="#contact" class="nav-cta">Satın Al</a>
     </div>
   </nav>
 
   <section class="hero" id="home">
-    <div class="hero-text">
-      <h1>Profesyonel <span>Roblox Sistemleri</span><br> WoziScript'te</h1>
+    <div>
+      <div class="eyebrow">⚡ Premium Roblox Sistem Vitrini</div>
+      <h1>Oyunun için <span>profesyonel sistemler</span> sunan güçlü bir vitrin sitesi.</h1>
       <p>
-        Oyunun için modern, güçlü ve dikkat çekici sistemler burada.
-        Admin menüleri, araç sistemleri, anti-cheat yapıları ve daha fazlası
-        premium görünümle tek bir yerde.
+        WoziScript; admin menüleri, araç sistemleri, anti-cheat yapıları ve özel script paketlerini modern bir tasarımla sunman için hazırlandı. Video arka plan, ürün popup'ları ve satın al butonlarıyla daha ciddi ve premium görünür.
       </p>
-
-      <div class="hero-buttons">
-        <a href="#systems" class="btn btn-primary">Sistemleri Gör</a>
-        <a href="#contact" class="btn btn-secondary">Sipariş Ver</a>
+      <div class="hero-actions">
+        <a href="#products" class="btn btn-primary">Ürünleri İncele</a>
+        <a href="#contact" class="btn btn-ghost">İletişime Geç</a>
       </div>
-
-      <div class="stats">
-        <div class="stat">
-          <h3>10+</h3>
-          <p>Hazır Sistem</p>
-        </div>
-        <div class="stat">
-          <h3>Hızlı</h3>
-          <p>Teslim Mantığı</p>
-        </div>
-        <div class="stat">
-          <h3>Özel</h3>
-          <p>Tasarım Stil</p>
-        </div>
+      <div class="hero-stats">
+        <div class="stat"><b>10+</b><span>Vitrin Sistemi</span></div>
+        <div class="stat"><b>Premium</b><span>Modern Tasarım</span></div>
+        <div class="stat"><b>Hazır</b><span>Tek Dosya Kurulum</span></div>
       </div>
     </div>
 
-    <div class="hero-card">
-      <div class="panel-top">
-        <div class="panel-tag">ÖNE ÇIKAN SİSTEM</div>
-        <div class="panel-price">₺999</div>
+    <div class="showcase">
+      <div class="window-bar">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <div class="online">● Sipariş Alınıyor</div>
       </div>
-
-      <div class="product-box">
-        <h3>Premium Admin Menü</h3>
-        <p>
-          Gelişmiş yetki sistemi, log ekranı, oyuncu işlemleri, komut kategorileri
-          ve profesyonel panel görünümüyle sunucuna güçlü bir yönetim sistemi kazandır.
-        </p>
-
-        <div class="feature-list">
-          <div class="feature-item">✔ Kick / Ban / Freeze / Unfreeze</div>
-          <div class="feature-item">✔ Yetkili kadro sistemi</div>
-          <div class="feature-item">✔ Log paneli ve işlem geçmişi</div>
-          <div class="feature-item">✔ Şık ve modern kullanıcı arayüzü</div>
+      <div class="featured-card">
+        <span class="tag">ÖNE ÇIKAN ÜRÜN</span>
+        <h3>Premium Admin Menü V4</h3>
+        <p>Gelişmiş yönetim araçları, oyuncu işlem kartı, log paneli, yetkili sistemi ve şık arayüz ile öne çıkan admin paketi.</p>
+        <div class="featured-price">₺999</div>
+        <div class="featured-features">
+          <div>✔ Kick / Ban / Freeze / Unfreeze</div>
+          <div>✔ Modern panel tasarımı ve canlı log kutusu</div>
+          <div>✔ Yetkili kadro bölümü ve oyuncu bilgi paneli</div>
+          <div>✔ Sunucu tarafıyla uyumlu geliştirilebilir yapı</div>
         </div>
+        <button class="product-btn" data-product="admin">Detayları Aç</button>
       </div>
     </div>
   </section>
 
-  <section id="systems">
-    <div class="section-title">
-      <h2>Sistemler</h2>
-      <p>
-        Aşağıda vitrin tarzında gösterilen sistemleri kendi sitene ekleyebilirsin.
-        Fiyatları, açıklamaları ve butonları sonra istediğin gibi değiştirirsin.
-      </p>
+  <section id="products">
+    <div class="section-head">
+      <h2>Öne Çıkan Sistemler</h2>
+      <p>Her ürün kartında popup ile detay gösterebilir, satın al butonlarını Discord, WhatsApp, Tebex veya başka bir bağlantıya yönlendirebilirsin.</p>
     </div>
 
-    <div class="cards">
-      <div class="card">
-        <span class="mini-tag">POPÜLER</span>
-        <h3>Admin Menü V3</h3>
-        <p>
-          Komut paneli, log kutusu, oyuncu işlemleri ve gelişmiş yönetim araçlarıyla tam admin sistemi.
-        </p>
-        <div class="price">₺999</div>
+    <div class="products">
+      <article class="product">
+        <span class="product-badge">POPÜLER</span>
+        <h3>Admin Menü V4</h3>
+        <p>Yetkili sistemi, gelişmiş log paneli, oyuncu bilgi kartı ve güçlü komut yapısıyla tam yönetim paketi.</p>
+        <div class="product-price">₺999</div>
         <ul>
-          <li>• Komut kategorileri</li>
-          <li>• Yetkili sistemi</li>
-          <li>• Oyuncu bilgi kartı</li>
-          <li>• Freeze / Unfreeze</li>
+          <li>• Oyuncu işlemleri ve kategorili menü</li>
+          <li>• Şık arayüz ve canlı log tasarımı</li>
+          <li>• Freeze / Unfreeze desteği</li>
         </ul>
-        <a href="#contact" class="card-btn">Detay Al</a>
-      </div>
+        <div class="product-actions">
+          <button class="product-btn" data-product="admin">Popup Aç</button>
+          <a class="buy-btn" href="#contact">Satın Al</a>
+        </div>
+      </article>
 
-      <div class="card">
-        <span class="mini-tag">GÜVENLİK</span>
+      <article class="product">
+        <span class="product-badge">GÜVENLİK</span>
         <h3>Anti-Cheat Paket</h3>
-        <p>
-          Oyundaki kötüye kullanımları azaltmak ve sunucunu daha güvenli hale getirmek için koruma sistemi.
-        </p>
-        <div class="price">₺799</div>
+        <p>Oyununu daha güvenli hale getirmek için temel koruma mantıkları ve sunucu taraflı destek yapısı.</p>
+        <div class="product-price">₺799</div>
         <ul>
-          <li>• Temel koruma yapısı</li>
-          <li>• Şüpheli işlem kontrolü</li>
-          <li>• Sunucu tarafı destek</li>
-          <li>• Geliştirilebilir yapı</li>
+          <li>• Şüpheli işlem kontrol mantığı</li>
+          <li>• Geliştirilebilir koruma yapısı</li>
+          <li>• Sunucu odaklı tasarım</li>
         </ul>
-        <a href="#contact" class="card-btn">Detay Al</a>
-      </div>
+        <div class="product-actions">
+          <button class="product-btn" data-product="anticheat">Popup Aç</button>
+          <a class="buy-btn" href="#contact">Satın Al</a>
+        </div>
+      </article>
 
-      <div class="card">
-        <span class="mini-tag">ARAÇ</span>
-        <h3>Araç & Siren Sistemi</h3>
-        <p>
-          Çakar, siren, ışık ve araç kontrol yapılarıyla roleplay ya da servis oyunların için güçlü bir araç paketi.
-        </p>
-        <div class="price">₺549</div>
+      <article class="product">
+        <span class="product-badge">ARAÇ</span>
+        <h3>Araç & Siren Sistemleri</h3>
+        <p>Çakar, siren, araç ışıkları ve tuş kontrollü sistemler için düzenli ve premium bir paket görünümü.</p>
+        <div class="product-price">₺549</div>
         <ul>
-          <li>• Toggle siren sistemi</li>
-          <li>• Işık senkron yapısı</li>
-          <li>• Tuş kontrollü kullanım</li>
-          <li>• Düzenlenebilir script</li>
+          <li>• Toggle siren yapısı</li>
+          <li>• Araç uyumlu kullanım mantığı</li>
+          <li>• Düzenlenebilir sistem altyapısı</li>
         </ul>
-        <a href="#contact" class="card-btn">Detay Al</a>
-      </div>
+        <div class="product-actions">
+          <button class="product-btn" data-product="vehicle">Popup Aç</button>
+          <a class="buy-btn" href="#contact">Satın Al</a>
+        </div>
+      </article>
 
-      <div class="card">
-        <span class="mini-tag">ÖZEL</span>
-        <h3>Özel Sistem Yapımı</h3>
-        <p>
-          Kendi oyununa özel panel, sistem ya da script istiyorsan senin isteğine göre özel çalışma hazırlanır.
-        </p>
-        <div class="price">Teklif Al</div>
+      <article class="product">
+        <span class="product-badge">ÖZEL</span>
+        <h3>Özel Script Paketi</h3>
+        <p>Kendi oyununa özel bir sistem, panel ya da script yaptırmak için teklif odaklı vitrin kartı.</p>
+        <div class="product-price">Teklif Al</div>
         <ul>
-          <li>• Sana özel tasarım</li>
-          <li>• İsteğe göre özellik</li>
-          <li>• Düzenlenebilir yapı</li>
-          <li>• Modern görünüm</li>
+          <li>• İsteğe özel sistem tasarımı</li>
+          <li>• Arayüz + script paketi</li>
+          <li>• Geliştirilebilir teslim yapısı</li>
         </ul>
-        <a href="#contact" class="card-btn">İletişime Geç</a>
-      </div>
+        <div class="product-actions">
+          <button class="product-btn" data-product="custom">Popup Aç</button>
+          <a class="buy-btn" href="#contact">Satın Al</a>
+        </div>
+      </article>
     </div>
   </section>
 
   <section id="about">
-    <div class="section-title">
+    <div class="section-head">
       <h2>WoziScript Nedir?</h2>
+      <p>Bu sayfa portföy gibi de kullanılabilir, satış vitrini gibi de. Video arka plan sayesinde daha premium görünür; ürün popup'ları sayesinde kartları kalabalık yapmadan detay gösterebilirsin.</p>
     </div>
-
     <div class="about-box">
-      WoziScript, Roblox projeleri için modern ve dikkat çekici sistemler sunan bir vitrin yapısında hazırlanmıştır.
-      Bu sayfayı ister satış odaklı kullan, ister portföy gibi göster. Buradaki kartları, fiyatları,
-      butonları ve açıklamaları çok kolay şekilde değiştirebilirsin. İstersen daha sonra buna
-      video arka plan, ürün detay sayfası, Discord popup ve satın al butonu da ekleriz.
+      WoziScript, Roblox için geliştirdiğin sistemleri daha ciddi ve profesyonel göstermek amacıyla hazırlanmış tek dosyalık bir vitrin sayfasıdır. Ürün kartlarına tıklanınca popup açılır, satın al butonları iletişim bölümüne gider. İstersen bu butonları doğrudan Discord sunucuna, sipariş formuna ya da başka bir satış bağlantısına yönlendirebilirsin.
     </div>
   </section>
 
   <section id="contact">
-    <div class="section-title">
-      <h2>İletişim</h2>
-      <p>Buraya Discord, GitHub, sosyal medya ya da sipariş bağlantını ekleyebilirsin.</p>
+    <div class="section-head">
+      <h2>Satın Al / İletişim</h2>
+      <p>Aşağıdaki bağlantıları kendi Discord, GitHub veya sipariş linklerinle değiştir.</p>
     </div>
-
-    <div class="contact-wrap">
-      <div class="contact-card">
-        <h3>İletişime Geç</h3>
-        <p>
-          Sistem satın almak, detay öğrenmek veya özel script yaptırmak için aşağıdaki iletişim yollarını kullan.
-        </p>
-        <a href="#">Discord: discord.gg/ornek</a><br>
-        <a href="#">GitHub: github.com/Slesy213</a>
+    <div class="contact-grid">
+      <div class="contact-box">
+        <h3>Sipariş Hattı</h3>
+        <p>Buraya kendi sipariş alma yöntemini ekle. Discord en kolayı olur.</p>
+        <p><a href="#">Discord: discord.gg/ornek</a></p>
+        <p><a href="#">GitHub: github.com/Slesy213</a></p>
+        <p><a href="#">Satın Al Formu: linkini buraya ekle</a></p>
       </div>
-
-      <div class="contact-card">
-        <h3>Not</h3>
-        <p>
-          Buradaki fiyatları örnek olarak ekledim. İstersen TL yerine ücretsiz, özel fiyat veya teklif sistemi yaparız.
-          Ayrıca her ürün için ayrı detay sayfası da ekleyebilirim.
-        </p>
-        <a href="#systems">Sistemlere Dön</a>
+      <div class="contact-box">
+        <h3>Kullanım Notu</h3>
+        <p>Video değiştirmek istersen en üstteki <b>video source</b> satırını değiştirmen yeterli. Ürün popup içerikleri ise aşağıdaki JavaScript kısmındaki ürün verilerinden geliyor.</p>
+        <p>Fiyatları, açıklamaları ve satın al bağlantılarını tek yerden rahatça düzenleyebilirsin.</p>
       </div>
     </div>
   </section>
 
   <footer>
-    © 2026 WoziScript - Tüm hakları saklıdır.
+    © 2026 WoziScript — Premium Roblox Sistem Vitrini
   </footer>
 
+  <div class="modal" id="productModal">
+    <div class="modal-card">
+      <div class="modal-top">
+        <div>
+          <h3 id="modalTitle">Ürün Başlığı</h3>
+          <p id="modalDesc">Ürün açıklaması burada görünecek.</p>
+        </div>
+        <button class="close-modal" id="closeModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-price" id="modalPrice">₺0</div>
+        <div class="modal-grid">
+          <div class="modal-panel">
+            <h4>Özellikler</h4>
+            <ul id="modalFeatures"></ul>
+          </div>
+          <div class="modal-panel">
+            <h4>Teslim İçeriği</h4>
+            <ul id="modalDelivery"></ul>
+          </div>
+        </div>
+        <div class="modal-bottom">
+          <div class="modal-note">Satın al butonunu kendi Discord ya da sipariş linkine yönlendirebilirsin. Bu yapı sadece profesyonel bir vitrin görünümü vermek için hazırlandı.</div>
+          <a class="modal-buy" id="modalBuy" href="#contact">Satın Al</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const products = {
+      admin: {
+        title: 'Premium Admin Menü V4',
+        desc: 'Gelişmiş komut yapısı, güçlü log alanı ve yetkili yönetim sistemiyle sunucun için premium admin paneli.',
+        price: '₺999',
+        features: [
+          'Kick / Ban / Freeze / Unfreeze işlemleri',
+          'Canlı log kutusu ve işlem takibi',
+          'Oyuncu bilgi kartı ve yönetim araçları',
+          'Kategori yapılı modern panel tasarımı'
+        ],
+        delivery: [
+          'Kuruluma uygun script dosyaları',
+          'Düzenlenebilir yapı ve basit entegrasyon',
+          'Arayüz tasarımıyla birlikte vitrin görünümü',
+          'İsteğe göre ek geliştirme yapılabilir'
+        ],
+        buy: '#contact'
+      },
+      anticheat: {
+        title: 'Anti-Cheat Paket',
+        desc: 'Oyununda kontrolü artırmak ve kötüye kullanımları azaltmak için hazırlanmış güvenlik odaklı paket.',
+        price: '₺799',
+        features: [
+          'Temel koruma mantığı',
+          'Şüpheli hareket kontrol yaklaşımı',
+          'Sunucu tarafıyla uyumlu yapı',
+          'Geliştirilmeye açık sistem iskeleti'
+        ],
+        delivery: [
+          'Kurulum için düzenli dosya yapısı',
+          'Açıklama eklenebilir özelleştirilebilir içerik',
+          'İleri sürüm için uygun temel',
+          'Vitrin sayfasına özel ürün detayı'
+        ],
+        buy: '#contact'
+      },
+      vehicle: {
+        title: 'Araç & Siren Sistemleri',
+        desc: 'Çakar, siren, ışık ve araç kullanım mantığıyla roleplay veya servis oyunları için şık sistem paketi.',
+        price: '₺549',
+        features: [
+          'Toggle siren kullanım mantığı',
+          'Araç içinde çalışmaya uygun sistem akışı',
+          'Tuş bazlı kullanım yapısı',
+          'Düzenlenebilir ve geliştirilebilir içerik'
+        ],
+        delivery: [
+          'Kurulum için temel sistem dosyaları',
+          'Satış vitrinine uyumlu ürün kartı',
+          'Popup detay içerikleri',
+          'Görsel olarak premium sunum'
+        ],
+        buy: '#contact'
+      },
+      custom: {
+        title: 'Özel Script Paketi',
+        desc: 'Kendi oyununa özel panel, arayüz veya sistem yaptırmak için teklif tabanlı özel çalışma paketi.',
+        price: 'Teklif Al',
+        features: [
+          'İsteğe göre sistem planı',
+          'Özel panel veya arayüz',
+          'Ürüne özel görsel vitrin kartı',
+          'Daha esnek geliştirme süreci'
+        ],
+        delivery: [
+          'İhtiyaca göre şekillenen içerik',
+          'Ürün kartı + detay popup sunumu',
+          'Satın al yönlendirmesi',
+          'Daha premium portföy görünümü'
+        ],
+        buy: '#contact'
+      }
+    };
+
+    const modal = document.getElementById('productModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalFeatures = document.getElementById('modalFeatures');
+    const modalDelivery = document.getElementById('modalDelivery');
+    const modalBuy = document.getElementById('modalBuy');
+    const closeModal = document.getElementById('closeModal');
+
+    function renderList(target, items){
+      target.innerHTML = items.map(item => `<li>• ${item}</li>`).join('');
+    }
+
+    document.querySelectorAll('[data-product]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.product;
+        const product = products[key];
+        if(!product) return;
+        modalTitle.textContent = product.title;
+        modalDesc.textContent = product.desc;
+        modalPrice.textContent = product.price;
+        renderList(modalFeatures, product.features);
+        renderList(modalDelivery, product.delivery);
+        modalBuy.setAttribute('href', product.buy);
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function hideModal(){
+      modal.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    closeModal.addEventListener('click', hideModal);
+    modal.addEventListener('click', (e) => {
+      if(e.target === modal) hideModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape') hideModal();
+    });
+  </script>
 </body>
 </html>
