@@ -3,122 +3,629 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Slesy Scripts</title>
+  <title>WoziScript</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
     }
 
-    body {
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      color: white;
-      min-height: 100vh;
+    html{
+      scroll-behavior:smooth;
     }
 
-    header {
-      padding: 30px;
-      text-align: center;
-      background: rgba(0,0,0,0.25);
-      backdrop-filter: blur(8px);
+    body{
+      background:
+        radial-gradient(circle at top left, rgba(0,255,200,0.12), transparent 30%),
+        radial-gradient(circle at top right, rgba(0,140,255,0.12), transparent 30%),
+        linear-gradient(135deg, #050816 0%, #0a1022 45%, #0d132b 100%);
+      color:#fff;
+      min-height:100vh;
+      overflow-x:hidden;
     }
 
-    header h1 {
-      font-size: 40px;
-      color: #38bdf8;
+    a{
+      text-decoration:none;
+      color:inherit;
     }
 
-    header p {
-      margin-top: 10px;
-      color: #cbd5e1;
+    .navbar{
+      width:100%;
+      padding:18px 6%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:sticky;
+      top:0;
+      z-index:999;
+      background:rgba(5,8,22,0.78);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,255,255,0.06);
     }
 
-    .container {
-      width: 90%;
-      max-width: 1100px;
-      margin: 40px auto;
+    .logo{
+      font-size:30px;
+      font-weight:800;
+      letter-spacing:1px;
+      color:#00e0ff;
+      text-shadow:0 0 18px rgba(0,224,255,0.35);
     }
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
+    .nav-links{
+      display:flex;
+      gap:26px;
+      align-items:center;
+      flex-wrap:wrap;
     }
 
-    .card {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 18px;
-      padding: 20px;
-      transition: 0.25s;
+    .nav-links a{
+      color:#dce7ff;
+      font-size:15px;
+      transition:.25s;
     }
 
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    .nav-links a:hover{
+      color:#00e0ff;
     }
 
-    .card h2 {
-      color: #7dd3fc;
-      margin-bottom: 10px;
+    .nav-btn{
+      background:linear-gradient(90deg,#00e0ff,#00ffaa);
+      color:#05111e !important;
+      padding:11px 18px;
+      border-radius:12px;
+      font-weight:700;
+      box-shadow:0 0 18px rgba(0,224,255,0.18);
     }
 
-    .card p {
-      color: #e2e8f0;
-      margin-bottom: 15px;
-      line-height: 1.5;
+    .hero{
+      width:100%;
+      padding:90px 6% 70px;
+      display:grid;
+      grid-template-columns:1.15fr 0.85fr;
+      gap:35px;
+      align-items:center;
+      min-height:calc(100vh - 80px);
     }
 
-    .btn {
-      display: inline-block;
-      text-decoration: none;
-      background: #38bdf8;
-      color: #0f172a;
-      padding: 10px 16px;
-      border-radius: 10px;
-      font-weight: bold;
+    .hero-text h1{
+      font-size:62px;
+      line-height:1.05;
+      margin-bottom:18px;
     }
 
-    footer {
-      text-align: center;
-      padding: 25px;
-      margin-top: 40px;
-      color: #94a3b8;
+    .hero-text h1 span{
+      color:#00e0ff;
+      text-shadow:0 0 20px rgba(0,224,255,0.35);
+    }
+
+    .hero-text p{
+      color:#b8c6e4;
+      font-size:18px;
+      line-height:1.7;
+      max-width:680px;
+      margin-bottom:28px;
+    }
+
+    .hero-buttons{
+      display:flex;
+      gap:15px;
+      flex-wrap:wrap;
+      margin-bottom:28px;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:14px 22px;
+      border-radius:14px;
+      font-weight:700;
+      transition:.25s;
+    }
+
+    .btn-primary{
+      background:linear-gradient(90deg,#00e0ff,#00ffaa);
+      color:#07111a;
+      box-shadow:0 0 22px rgba(0,224,255,0.18);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-3px);
+      box-shadow:0 12px 30px rgba(0,224,255,0.18);
+    }
+
+    .btn-secondary{
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.04);
+      color:#fff;
+    }
+
+    .btn-secondary:hover{
+      transform:translateY(-3px);
+      border-color:rgba(0,224,255,0.35);
+    }
+
+    .stats{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      margin-top:20px;
+    }
+
+    .stat{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      padding:16px 18px;
+      border-radius:18px;
+      min-width:145px;
+      backdrop-filter:blur(10px);
+    }
+
+    .stat h3{
+      font-size:25px;
+      color:#00e0ff;
+      margin-bottom:6px;
+    }
+
+    .stat p{
+      font-size:13px;
+      color:#aebbd7;
+      margin:0;
+    }
+
+    .hero-card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:28px;
+      padding:28px;
+      box-shadow:0 25px 60px rgba(0,0,0,0.35);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:-80px;
+      background:radial-gradient(circle, rgba(0,224,255,0.11), transparent 40%);
+      pointer-events:none;
+    }
+
+    .panel-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:18px;
+      position:relative;
+      z-index:1;
+    }
+
+    .panel-tag{
+      background:rgba(0,224,255,0.12);
+      color:#7cefff;
+      border:1px solid rgba(0,224,255,0.25);
+      padding:8px 12px;
+      border-radius:10px;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .panel-price{
+      font-size:28px;
+      font-weight:800;
+      color:#fff;
+    }
+
+    .product-box{
+      background:rgba(8,16,35,0.72);
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:20px;
+      padding:22px;
+      margin-top:14px;
+      position:relative;
+      z-index:1;
+    }
+
+    .product-box h3{
+      font-size:26px;
+      margin-bottom:10px;
+    }
+
+    .product-box p{
+      color:#b9c7e5;
+      line-height:1.6;
+      margin-bottom:16px;
+    }
+
+    .feature-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .feature-item{
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.05);
+      padding:12px 14px;
+      border-radius:12px;
+      color:#dce6ff;
+      font-size:14px;
+    }
+
+    section{
+      padding:80px 6%;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:45px;
+    }
+
+    .section-title h2{
+      font-size:42px;
+      margin-bottom:10px;
+    }
+
+    .section-title p{
+      color:#aebbd7;
+      max-width:760px;
+      margin:0 auto;
+      line-height:1.7;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+      gap:24px;
+    }
+
+    .card{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:24px;
+      padding:26px;
+      transition:.25s;
+      box-shadow:0 10px 30px rgba(0,0,0,0.18);
+    }
+
+    .card:hover{
+      transform:translateY(-8px);
+      border-color:rgba(0,224,255,0.22);
+      box-shadow:0 18px 40px rgba(0,0,0,0.28);
+    }
+
+    .card .mini-tag{
+      display:inline-block;
+      padding:7px 12px;
+      background:rgba(0,224,255,0.11);
+      border:1px solid rgba(0,224,255,0.16);
+      color:#76f3ff;
+      border-radius:10px;
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:16px;
+    }
+
+    .card h3{
+      font-size:25px;
+      margin-bottom:12px;
+    }
+
+    .card p{
+      color:#b6c3df;
+      line-height:1.7;
+      margin-bottom:18px;
+    }
+
+    .price{
+      font-size:28px;
+      font-weight:800;
+      color:#00e0ff;
+      margin-bottom:16px;
+    }
+
+    .card ul{
+      list-style:none;
+      margin-bottom:22px;
+    }
+
+    .card ul li{
+      color:#d9e5ff;
+      margin-bottom:10px;
+      font-size:14px;
+    }
+
+    .card-btn{
+      display:inline-block;
+      padding:12px 18px;
+      border-radius:12px;
+      background:linear-gradient(90deg,#00e0ff,#00ffaa);
+      color:#05111d;
+      font-weight:800;
+    }
+
+    .about-box{
+      max-width:950px;
+      margin:0 auto;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      padding:35px;
+      border-radius:28px;
+      text-align:center;
+      line-height:1.8;
+      color:#c9d5ee;
+    }
+
+    .contact-wrap{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:24px;
+      align-items:stretch;
+    }
+
+    .contact-card{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:24px;
+      padding:28px;
+    }
+
+    .contact-card h3{
+      font-size:27px;
+      margin-bottom:12px;
+    }
+
+    .contact-card p{
+      color:#b6c3df;
+      line-height:1.7;
+      margin-bottom:18px;
+    }
+
+    .contact-card a{
+      display:inline-block;
+      margin-top:8px;
+      color:#00e0ff;
+      font-weight:700;
+    }
+
+    footer{
+      padding:28px 6%;
+      border-top:1px solid rgba(255,255,255,0.06);
+      text-align:center;
+      color:#95a6cb;
+      background:rgba(255,255,255,0.02);
+    }
+
+    @media(max-width:980px){
+      .hero{
+        grid-template-columns:1fr;
+        padding-top:70px;
+      }
+
+      .hero-text h1{
+        font-size:48px;
+      }
+
+      .contact-wrap{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:600px){
+      .navbar{
+        padding:16px 4%;
+      }
+
+      .logo{
+        font-size:24px;
+      }
+
+      .nav-links{
+        gap:14px;
+      }
+
+      .hero{
+        padding:55px 4% 50px;
+      }
+
+      section{
+        padding:60px 4%;
+      }
+
+      .hero-text h1{
+        font-size:38px;
+      }
+
+      .section-title h2{
+        font-size:32px;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Slesy Scripts</h1>
-    <p>Roblox için geliştirdiğim ücretsiz script ve sistemleri burada paylaşıyorum.</p>
-  </header>
 
-  <div class="container">
-    <div class="cards">
-      <div class="card">
-        <h2>Admin Menü Sistemi</h2>
-        <p>Komutlar, log sistemi, oyuncu işlemleri ve yetkili araçları içeren gelişmiş admin paneli.</p>
-        <a class="btn" href="#">İncele</a>
+  <nav class="navbar">
+    <div class="logo">WoziScript</div>
+    <div class="nav-links">
+      <a href="#home">Ana Sayfa</a>
+      <a href="#systems">Sistemler</a>
+      <a href="#about">Hakkımızda</a>
+      <a href="#contact" class="nav-btn">İletişim</a>
+    </div>
+  </nav>
+
+  <section class="hero" id="home">
+    <div class="hero-text">
+      <h1>Profesyonel <span>Roblox Sistemleri</span><br> WoziScript'te</h1>
+      <p>
+        Oyunun için modern, güçlü ve dikkat çekici sistemler burada.
+        Admin menüleri, araç sistemleri, anti-cheat yapıları ve daha fazlası
+        premium görünümle tek bir yerde.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#systems" class="btn btn-primary">Sistemleri Gör</a>
+        <a href="#contact" class="btn btn-secondary">Sipariş Ver</a>
       </div>
 
-      <div class="card">
-        <h2>Anti-Cheat Sistemi</h2>
-        <p>Oyununu korumak için temel ve gelişmiş koruma sistemleri. Kendi projelerin için ücretsiz kullan.</p>
-        <a class="btn" href="#">İncele</a>
-      </div>
-
-      <div class="card">
-        <h2>Araç / Siren Sistemleri</h2>
-        <p>Çakar, siren, araç kontrol ve benzeri Roblox araç scriptlerini tek yerde topladım.</p>
-        <a class="btn" href="#">İncele</a>
+      <div class="stats">
+        <div class="stat">
+          <h3>10+</h3>
+          <p>Hazır Sistem</p>
+        </div>
+        <div class="stat">
+          <h3>Hızlı</h3>
+          <p>Teslim Mantığı</p>
+        </div>
+        <div class="stat">
+          <h3>Özel</h3>
+          <p>Tasarım Stil</p>
+        </div>
       </div>
     </div>
-  </div>
+
+    <div class="hero-card">
+      <div class="panel-top">
+        <div class="panel-tag">ÖNE ÇIKAN SİSTEM</div>
+        <div class="panel-price">₺999</div>
+      </div>
+
+      <div class="product-box">
+        <h3>Premium Admin Menü</h3>
+        <p>
+          Gelişmiş yetki sistemi, log ekranı, oyuncu işlemleri, komut kategorileri
+          ve profesyonel panel görünümüyle sunucuna güçlü bir yönetim sistemi kazandır.
+        </p>
+
+        <div class="feature-list">
+          <div class="feature-item">✔ Kick / Ban / Freeze / Unfreeze</div>
+          <div class="feature-item">✔ Yetkili kadro sistemi</div>
+          <div class="feature-item">✔ Log paneli ve işlem geçmişi</div>
+          <div class="feature-item">✔ Şık ve modern kullanıcı arayüzü</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="systems">
+    <div class="section-title">
+      <h2>Sistemler</h2>
+      <p>
+        Aşağıda vitrin tarzında gösterilen sistemleri kendi sitene ekleyebilirsin.
+        Fiyatları, açıklamaları ve butonları sonra istediğin gibi değiştirirsin.
+      </p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <span class="mini-tag">POPÜLER</span>
+        <h3>Admin Menü V3</h3>
+        <p>
+          Komut paneli, log kutusu, oyuncu işlemleri ve gelişmiş yönetim araçlarıyla tam admin sistemi.
+        </p>
+        <div class="price">₺999</div>
+        <ul>
+          <li>• Komut kategorileri</li>
+          <li>• Yetkili sistemi</li>
+          <li>• Oyuncu bilgi kartı</li>
+          <li>• Freeze / Unfreeze</li>
+        </ul>
+        <a href="#contact" class="card-btn">Detay Al</a>
+      </div>
+
+      <div class="card">
+        <span class="mini-tag">GÜVENLİK</span>
+        <h3>Anti-Cheat Paket</h3>
+        <p>
+          Oyundaki kötüye kullanımları azaltmak ve sunucunu daha güvenli hale getirmek için koruma sistemi.
+        </p>
+        <div class="price">₺799</div>
+        <ul>
+          <li>• Temel koruma yapısı</li>
+          <li>• Şüpheli işlem kontrolü</li>
+          <li>• Sunucu tarafı destek</li>
+          <li>• Geliştirilebilir yapı</li>
+        </ul>
+        <a href="#contact" class="card-btn">Detay Al</a>
+      </div>
+
+      <div class="card">
+        <span class="mini-tag">ARAÇ</span>
+        <h3>Araç & Siren Sistemi</h3>
+        <p>
+          Çakar, siren, ışık ve araç kontrol yapılarıyla roleplay ya da servis oyunların için güçlü bir araç paketi.
+        </p>
+        <div class="price">₺549</div>
+        <ul>
+          <li>• Toggle siren sistemi</li>
+          <li>• Işık senkron yapısı</li>
+          <li>• Tuş kontrollü kullanım</li>
+          <li>• Düzenlenebilir script</li>
+        </ul>
+        <a href="#contact" class="card-btn">Detay Al</a>
+      </div>
+
+      <div class="card">
+        <span class="mini-tag">ÖZEL</span>
+        <h3>Özel Sistem Yapımı</h3>
+        <p>
+          Kendi oyununa özel panel, sistem ya da script istiyorsan senin isteğine göre özel çalışma hazırlanır.
+        </p>
+        <div class="price">Teklif Al</div>
+        <ul>
+          <li>• Sana özel tasarım</li>
+          <li>• İsteğe göre özellik</li>
+          <li>• Düzenlenebilir yapı</li>
+          <li>• Modern görünüm</li>
+        </ul>
+        <a href="#contact" class="card-btn">İletişime Geç</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-title">
+      <h2>WoziScript Nedir?</h2>
+    </div>
+
+    <div class="about-box">
+      WoziScript, Roblox projeleri için modern ve dikkat çekici sistemler sunan bir vitrin yapısında hazırlanmıştır.
+      Bu sayfayı ister satış odaklı kullan, ister portföy gibi göster. Buradaki kartları, fiyatları,
+      butonları ve açıklamaları çok kolay şekilde değiştirebilirsin. İstersen daha sonra buna
+      video arka plan, ürün detay sayfası, Discord popup ve satın al butonu da ekleriz.
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-title">
+      <h2>İletişim</h2>
+      <p>Buraya Discord, GitHub, sosyal medya ya da sipariş bağlantını ekleyebilirsin.</p>
+    </div>
+
+    <div class="contact-wrap">
+      <div class="contact-card">
+        <h3>İletişime Geç</h3>
+        <p>
+          Sistem satın almak, detay öğrenmek veya özel script yaptırmak için aşağıdaki iletişim yollarını kullan.
+        </p>
+        <a href="#">Discord: discord.gg/ornek</a><br>
+        <a href="#">GitHub: github.com/Slesy213</a>
+      </div>
+
+      <div class="contact-card">
+        <h3>Not</h3>
+        <p>
+          Buradaki fiyatları örnek olarak ekledim. İstersen TL yerine ücretsiz, özel fiyat veya teklif sistemi yaparız.
+          Ayrıca her ürün için ayrı detay sayfası da ekleyebilirim.
+        </p>
+        <a href="#systems">Sistemlere Dön</a>
+      </div>
+    </div>
+  </section>
 
   <footer>
-    © 2026 Slesy Scripts - Tüm scriptler ücretsiz paylaşılmaktadır.
+    © 2026 WoziScript - Tüm hakları saklıdır.
   </footer>
+
 </body>
 </html>
