@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WoziScript | Ücretsiz Roblox Scriptleri</title>
+  <title>WoziScript | Ücretsiz Roblox Sistemleri</title>
   <style>
     :root{
       --bg:#050816;
-      --bg2:#0b1120;
-      --card:rgba(10,16,34,.78);
+      --card:rgba(10,16,34,.80);
       --line:rgba(255,255,255,.10);
       --text:#f8fbff;
       --muted:#b7c4df;
@@ -27,7 +26,6 @@
     }
 
     a{text-decoration:none;color:inherit}
-    button{font:inherit}
 
     #bgVideo{
       position:fixed;
@@ -131,7 +129,7 @@
     }
 
     .hero h1{
-      font-size:64px;
+      font-size:62px;
       line-height:1.02;
       letter-spacing:-1.4px;
       margin-bottom:18px;
@@ -159,13 +157,11 @@
     }
 
     .btn{
-      border:none;
-      cursor:pointer;
+      display:inline-block;
       padding:14px 22px;
       border-radius:16px;
       font-weight:800;
       transition:.22s ease;
-      display:inline-block;
     }
 
     .btn-primary{
@@ -174,7 +170,7 @@
       box-shadow:0 0 28px rgba(53,231,255,.20);
     }
 
-    .btn-primary:hover,.copy-btn:hover{
+    .btn-primary:hover,.download-btn:hover{
       transform:translateY(-3px);
       box-shadow:0 16px 38px rgba(53,231,255,.16);
     }
@@ -242,10 +238,7 @@
     }
 
     .dots{display:flex;gap:8px}
-    .dots span{
-      width:11px;height:11px;border-radius:50%;display:block;
-      background:rgba(255,255,255,.18)
-    }
+    .dots span{width:11px;height:11px;border-radius:50%;display:block;background:rgba(255,255,255,.18)}
 
     .live-tag{
       font-size:12px;
@@ -306,12 +299,12 @@
     .section-head h2{font-size:42px;margin-bottom:12px}
     .section-head p{color:var(--muted);line-height:1.75}
 
-    .scripts{
+    .systems{
       display:grid;
       gap:26px;
     }
 
-    .script-card{
+    .system-card{
       background:var(--card);
       border:1px solid var(--line);
       border-radius:28px;
@@ -320,21 +313,20 @@
       backdrop-filter:blur(14px);
     }
 
-    .script-top{
+    .system-top{
       display:grid;
       grid-template-columns:380px 1fr;
-      gap:0;
     }
 
-    .script-image{
-      min-height:260px;
+    .system-image{
+      min-height:270px;
       background:linear-gradient(135deg, rgba(53,231,255,.18), rgba(50,255,180,.10));
       border-right:1px solid rgba(255,255,255,.08);
       position:relative;
       overflow:hidden;
     }
 
-    .script-image img{
+    .system-image img{
       width:100%;
       height:100%;
       object-fit:cover;
@@ -358,11 +350,14 @@
         linear-gradient(135deg, rgba(9,15,32,.92), rgba(11,19,40,.92));
     }
 
-    .script-content{
+    .system-content{
       padding:26px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
     }
 
-    .script-badge{
+    .system-badge{
       display:inline-block;
       padding:7px 11px;
       border-radius:10px;
@@ -374,25 +369,25 @@
       color:#90f1ff;
     }
 
-    .script-content h3{
+    .system-content h3{
       font-size:30px;
       margin-bottom:10px;
     }
 
-    .script-content p{
+    .system-content p{
       color:var(--muted);
       line-height:1.75;
       margin-bottom:18px;
     }
 
-    .script-meta{
+    .system-meta{
       display:flex;
       gap:12px;
       flex-wrap:wrap;
-      margin-bottom:18px;
+      margin-bottom:20px;
     }
 
-    .script-meta span{
+    .system-meta span{
       padding:9px 12px;
       border-radius:12px;
       background:rgba(255,255,255,.04);
@@ -402,47 +397,35 @@
       font-weight:700;
     }
 
-    .code-wrap{
+    .download-area{
       border-top:1px solid rgba(255,255,255,.08);
-      padding:24px 26px 26px;
-    }
-
-    .code-head{
+      padding:22px 26px 26px;
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:14px;
-      margin-bottom:14px;
+      align-items:center;
+      gap:16px;
       flex-wrap:wrap;
     }
 
-    .code-head h4{
+    .download-info h4{
       font-size:20px;
+      margin-bottom:8px;
     }
 
-    .copy-btn{
-      border:none;
-      cursor:pointer;
-      padding:11px 16px;
-      border-radius:14px;
-      font-weight:800;
+    .download-info p{
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .download-btn{
+      display:inline-block;
+      padding:14px 20px;
+      border-radius:16px;
+      font-weight:900;
       background:linear-gradient(90deg,var(--cyan),var(--mint));
       color:#06111c;
       transition:.2s;
-    }
-
-    pre{
-      margin:0;
-      background:#07101f;
-      border:1px solid rgba(255,255,255,.07);
-      border-radius:18px;
-      padding:18px;
-      overflow:auto;
-      color:#dff6ff;
-      font-size:14px;
-      line-height:1.65;
-      white-space:pre-wrap;
-      word-break:break-word;
+      white-space:nowrap;
     }
 
     .about-box,.contact-box{
@@ -482,8 +465,8 @@
       .hero{grid-template-columns:1fr}
       .hero h1{font-size:50px}
       .contact-grid{grid-template-columns:1fr}
-      .script-top{grid-template-columns:1fr}
-      .script-image{min-height:220px;border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}
+      .system-top{grid-template-columns:1fr}
+      .system-image{min-height:220px;border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}
     }
 
     @media (max-width:700px){
@@ -493,7 +476,8 @@
       .section-head h2{font-size:33px}
       .nav-links{gap:14px}
       .logo{font-size:24px}
-      .script-content h3{font-size:24px}
+      .system-content h3{font-size:24px}
+      .download-area{align-items:flex-start}
     }
   </style>
 </head>
@@ -508,7 +492,7 @@
     <div class="logo">WoziScript</div>
     <div class="nav-links">
       <a href="#home">Ana Sayfa</a>
-      <a href="#scripts">Scriptler</a>
+      <a href="#systems">Sistemler</a>
       <a href="#about">Hakkımda</a>
       <a href="#contact" class="nav-cta">İletişim</a>
     </div>
@@ -516,119 +500,105 @@
 
   <section class="hero" id="home">
     <div>
-      <div class="eyebrow">⚡ Ücretsiz Roblox Script Paylaşım Sitesi</div>
-      <h1>Yeni yaptığım <span>sistemleri bedava</span> burada paylaşıyorum.</h1>
+      <div class="eyebrow">⚡ Ücretsiz Roblox Sistem Dağıtım Sitesi</div>
+      <h1>Yaptığım <span>sistemleri ücretsiz</span> dosya olarak paylaşıyorum.</h1>
       <p>
-        WoziScript artık satış sitesi değil. Burada yaptığın yeni sistemlerin görselini koyabilir, altına açıklamasını yazabilir ve en alta script kodunu ekleyebilirsin. Ziyaretçiler kodu direkt kopyalayıp kullanabilir.
+        WoziScript artık tam olarak dosya dağıtım mantığıyla düzenlendi. Her sistem için görsel koyabilir, kısa açıklama yazabilir ve en alta kullanıcıların dosyayı indireceği bir buton ekleyebilirsin. Kod sitede görünmez, dosyanın içinde olur.
       </p>
       <div class="hero-actions">
-        <a href="#scripts" class="btn btn-primary">Scriptlere Git</a>
+        <a href="#systems" class="btn btn-primary">Sistemlere Git</a>
         <a href="#contact" class="btn btn-ghost">Bana Ulaş</a>
       </div>
       <div class="hero-stats">
-        <div class="stat"><b>Bedava</b><span>Tüm paylaşımlar ücretsiz</span></div>
-        <div class="stat"><b>Kolay</b><span>Foto + açıklama + kod</span></div>
-        <div class="stat"><b>Hızlı</b><span>Kopyala yapıştır kullanım</span></div>
+        <div class="stat"><b>Bedava</b><span>Tüm sistemler ücretsiz</span></div>
+        <div class="stat"><b>Dosya</b><span>İndirme odaklı yapı</span></div>
+        <div class="stat"><b>Düzenli</b><span>Görsel + açıklama + indir</span></div>
       </div>
     </div>
 
     <div class="hero-panel">
       <div class="window-bar">
         <div class="dots"><span></span><span></span><span></span></div>
-        <div class="live-tag">● Yeni Scriptler Eklenecek</div>
+        <div class="live-tag">● Yeni Sistemler Yüklenecek</div>
       </div>
       <div class="featured-card">
         <span class="tag">SİTE MANTIĞI</span>
         <h3>Nasıl paylaşacaksın?</h3>
-        <p>Her yeni sistem için bir kart ekleyeceksin. Üste görsel, ortaya kısa bilgi, alta da kod kutusu gelecek. Kullanıcı butona basıp kodu kopyalayacak.</p>
+        <p>Her yeni sistem için bir kart ekleyeceksin. Üste sistemin görseli, ortaya kısa bilgi, alta da dosya indirme butonu gelecek. Dosyayı kullanıcı indirip sistemin içeriğine oradan ulaşacak.</p>
         <div class="featured-features">
-          <div>✔ Script görseli ekleme alanı</div>
-          <div>✔ Sistem açıklaması ve özellikleri</div>
-          <div>✔ Altta uzun kod kutusu</div>
-          <div>✔ Tek tuşla kod kopyalama</div>
+          <div>✔ Sistem görseli ekleme alanı</div>
+          <div>✔ Açıklama ve özellik kutuları</div>
+          <div>✔ Dosya indirme butonu</div>
+          <div>✔ Kod göstermeden temiz paylaşım</div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="scripts">
+  <section id="systems">
     <div class="section-head">
-      <h2>Paylaşılan Scriptler</h2>
-      <p>Aşağıdaki yapı tamamen senin istediğin mantıkta hazırlandı. Yeni sistem yaptıkça bir kart daha çoğaltıp fotoğrafı ve kodu değiştirmen yeterli.</p>
+      <h2>Paylaşılan Sistemler</h2>
+      <p>Aşağıdaki yapı senin istediğin mantığa göre hazırlandı. Yeni sistem yaptıkça kartı çoğaltıp sadece görseli, açıklamayı ve dosya linkini değiştirmen yeterli.</p>
     </div>
 
-    <div class="scripts">
-      <article class="script-card">
-        <div class="script-top">
-          <div class="script-image">
-            <div class="image-placeholder">BURAYA<br>SCRİPT FOTOĞRAFI<br>EKLENECEK</div>
+    <div class="systems">
+      <article class="system-card">
+        <div class="system-top">
+          <div class="system-image">
+            <div class="image-placeholder">BURAYA<br>SİSTEM FOTOĞRAFI<br>EKLENECEK</div>
             <!-- Örnek kullanım:
             <img src="images/adminmenu.png" alt="Admin Menü Sistemi">
             -->
           </div>
-          <div class="script-content">
-            <span class="script-badge">ÖRNEK PAYLAŞIM</span>
+          <div class="system-content">
+            <span class="system-badge">ÖRNEK SİSTEM</span>
             <h3>Admin Menü Sistemi</h3>
             <p>
-              Bu alana sistemin ne işe yaradığını yazarsın. Mesela oyuncu yönetimi, log sistemi, freeze komutu, bildirim sistemi gibi özellikleri burada tanıtırsın.
+              Bu alana sistemin ne işe yaradığını yazarsın. Mesela oyuncu işlemleri, log sistemi, bildirim sistemi, yetkili araçları gibi detayları burada gösterebilirsin.
             </p>
-            <div class="script-meta">
+            <div class="system-meta">
               <span>Kategori: Admin</span>
               <span>Sürüm: V1</span>
               <span>Durum: Ücretsiz</span>
             </div>
           </div>
         </div>
-        <div class="code-wrap">
-          <div class="code-head">
-            <h4>Sistem Kodu</h4>
-            <button class="copy-btn" onclick="copyCode('code1', this)">Kodu Kopyala</button>
+        <div class="download-area">
+          <div class="download-info">
+            <h4>Dosya İndir</h4>
+            <p>Bu butona tıklayan kullanıcı sistem dosyasını indirir. Kod veya içerik dosyanın içinde olur.</p>
           </div>
-          <pre id="code1">-- Buraya kendi script kodunu yapıştıracaksın
-print("WoziScript Admin Menü Sistemi")
-
-local players = game:GetService("Players")
-local player = players.LocalPlayer
-
-print(player.Name .. " sistemi başlattı")</pre>
+          <a class="download-btn" href="files/admin-menu.zip" download>Dosyayı İndir</a>
         </div>
       </article>
 
-      <article class="script-card">
-        <div class="script-top">
-          <div class="script-image">
+      <article class="system-card">
+        <div class="system-top">
+          <div class="system-image">
             <div class="image-placeholder">BURAYA<br>2. SİSTEMİN<br>GÖRSELİ</div>
             <!-- Örnek kullanım:
             <img src="images/siren.png" alt="Siren Sistemi">
             -->
           </div>
-          <div class="script-content">
-            <span class="script-badge">YENİ SİSTEM</span>
+          <div class="system-content">
+            <span class="system-badge">YENİ SİSTEM</span>
             <h3>Araç & Siren Sistemi</h3>
             <p>
-              Bu bölüme ikinci sistemin açıklamasını yazarsın. Örnek olarak Y tuşu ile siren açma kapama, araç içi kullanım ve ses sistemi gibi detayları ekleyebilirsin.
+              Bu bölüme ikinci sistemin açıklamasını yazarsın. Örnek olarak siren açma kapama, araç içi kullanım ve ses sistemi gibi detayları anlatabilirsin.
             </p>
-            <div class="script-meta">
+            <div class="system-meta">
               <span>Kategori: Araç</span>
               <span>Sürüm: V1</span>
               <span>Durum: Ücretsiz</span>
             </div>
           </div>
         </div>
-        <div class="code-wrap">
-          <div class="code-head">
-            <h4>Sistem Kodu</h4>
-            <button class="copy-btn" onclick="copyCode('code2', this)">Kodu Kopyala</button>
+        <div class="download-area">
+          <div class="download-info">
+            <h4>Dosya İndir</h4>
+            <p>Kullanıcı burada sistemi zip veya başka dosya olarak indirebilir.</p>
           </div>
-          <pre id="code2">-- Buraya ikinci sisteminin kodunu yapıştır
-print("WoziScript Siren Sistemi")
-
-local sirenOn = false
-
-function toggleSiren()
-    sirenOn = not sirenOn
-    print("Siren durumu:", sirenOn)
-end</pre>
+          <a class="download-btn" href="files/siren-system.zip" download>Dosyayı İndir</a>
         </div>
       </article>
     </div>
@@ -637,10 +607,10 @@ end</pre>
   <section id="about">
     <div class="section-head">
       <h2>WoziScript Nedir?</h2>
-      <p>Bu site Roblox scriptlerini ücretsiz paylaşman için hazırlandı. Mantık çok basit: görsel koy, açıklama yaz, kodu alta ekle.</p>
+      <p>Bu site Roblox sistemlerini ücretsiz dosya halinde paylaşman için hazırlandı. Mantık basit: görsel koy, açıklama yaz, dosya indir butonu ekle.</p>
     </div>
     <div class="about-box">
-      WoziScript, yaptığın sistemleri düzenli ve profesyonel şekilde paylaşman için oluşturulmuş bir script vitrin sitesidir. Burada satış, fiyat ve ürün popup mantığı kaldırıldı. Onun yerine ziyaretçilerin görseli görüp açıklamayı okuyacağı ve en altta kodu direkt kopyalayabileceği sade ama güçlü bir yapı kuruldu.
+      WoziScript, yaptığın sistemleri düzenli ve profesyonel şekilde paylaşman için oluşturulmuş bir dağıtım sitesidir. Burada kodu sitede göstermek yerine sistemi dosya halinde paylaşırsın. Böylece sayfa daha temiz görünür ve kullanıcılar sistemi doğrudan indirir.
     </div>
   </section>
 
@@ -657,34 +627,15 @@ end</pre>
         <p><a href="#">GitHub: github.com/Slesy213</a></p>
       </div>
       <div class="contact-box">
-        <h3>Nasıl yeni script eklersin?</h3>
-        <p>Mevcut script kartını kopyala, başlığı değiştir, açıklamayı değiştir, fotoğrafı ekle ve en alttaki kodu yeni scriptinle değiştir. Bu kadar.</p>
-        <p>İstersen daha sonra kategori filtresi, arama kutusu ve indirme butonu da eklenebilir.</p>
+        <h3>Nasıl yeni sistem eklersin?</h3>
+        <p>Mevcut sistem kartını kopyala, başlığı değiştir, açıklamayı değiştir, fotoğrafı ekle ve en alttaki indirme linkini yeni dosyanla değiştir. Bu kadar.</p>
+        <p>Örnek dosya yolu: <b>files/admin-menu.zip</b></p>
       </div>
     </div>
   </section>
 
   <footer>
-    © 2026 WoziScript — Ücretsiz Roblox Script Paylaşım Sitesi
+    © 2026 WoziScript — Ücretsiz Roblox Sistem Dağıtım Sitesi
   </footer>
-
-  <script>
-    async function copyCode(codeId, button){
-      const code = document.getElementById(codeId).innerText;
-      try{
-        await navigator.clipboard.writeText(code);
-        const oldText = button.textContent;
-        button.textContent = 'Kopyalandı';
-        setTimeout(() => {
-          button.textContent = oldText;
-        }, 1800);
-      }catch(err){
-        button.textContent = 'Kopyalanamadı';
-        setTimeout(() => {
-          button.textContent = 'Kodu Kopyala';
-        }, 1800);
-      }
-    }
-  </script>
 </body>
 </html>
