@@ -3,89 +3,145 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kalp</title>
+  <title>Heart Particle</title>
   <style>
     html, body {
       margin: 0;
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: #000;
+      background: #050505;
     }
 
     canvas {
       display: block;
+      width: 100%;
+      height: 100%;
+      cursor: default;
     }
   </style>
 </head>
 <body>
-  <canvas id="c"></canvas>
+  <canvas id="canvas"></canvas>
 
   <script>
-    const canvas = document.getElementById("c");
-    const ctx = canvas.getContext("2d");
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d", { alpha: false });
 
     let w = 0;
     let h = 0;
-    let cx = 0;
-    let cy = 0;
+    let dpr = Math.min(window.devicePixelRatio || 1, 1.5);
 
+    const particles = [];
     const mouse = {
-      x: -9999,
-      y: -9999,
+      x: 99999,
+      y: 99999,
       radius: 90
     };
 
-    const particles = [];
-    const GAP = 7; // küçültürsen daha dolu olur ama biraz daha yük bindirir
+    const SETTINGS = {
+      gap: 6,          // küçülürse daha dolu olur ama biraz daha yük bindirir
+      ease: 0.06,      // geri dönme hızı
+      friction: 0.86,  // yumuşama
+      force: 4.2,      // mouse itme gücü
+      particleSize: 1.35
+    };
 
-    function resize() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-      cx = w / 2;
-      cy = h / 2;
-      buildHeart();
-    }
-
-    function heartEquation(x, y) {
+    function heartFn(x, y) {
       const a = x * x + y * y - 1;
       return a * a * a - x * x * y * y * y;
+    }
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      w = Math.floor(window.innerWidth);
+      h = Math.floor(window.innerHeight);
+
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      buildHeart();
     }
 
     function buildHeart() {
       particles.length = 0;
 
-      const scale = Math.min(w, h) * 0.022;
+      const size = Math.min(w, h) * 0.32;
+      const step = SETTINGS.gap;
+      const centerX = w / 2;
+      const centerY = h / 2;
 
-      for (let px = -18; px <= 18; px += 0.45) {
-        for (let py = -18; py <= 18; py += 0.45) {
-          const x = px / 18;
-          const y = py / 18;
+      const half = size / 2;
 
-          if (heartEquation(x, y) <= 0) {
-            const tx = cx + px * scale / 18;
-            const ty = cy - py * scale / 18;
+      for (let sy = -half; sy <= half; sy += step) {
+        for (let sx = -half; sx <= half; sx += step) {
+          const x = sx / (size / 2.25);
+          const y = sy / (size / 2.25);
 
-            if (
-              Math.round((tx - cx + 9999) / GAP) % 1 === 0 &&
-              Math.round((ty - cy + 9999) / GAP) % 1 === 0
-            ) {
-              particles.push({
-                x: tx,
-                y: ty,
-                baseX: tx,
-                baseY: ty,
-                vx: 0,
-                vy: 0,
-                size: 2.2 + Math.random() * 1.2
-              });
-            }
+          if (heartFn(x, -y) <= 0) {
+            const px = centerX + sx;
+            const py = centerY + sy;
+
+            particles.push({
+              x: px,
+              y: py,
+              baseX: px,
+              baseY: py,
+              vx: 0,
+              vy: 0
+            });
           }
         }
       }
     }
 
-    window.addEventListener("resize", resize);
+    function animate() {
+      ctx.fillStyle = "#050505";
+      ctx.fillRect(0, 0, w, h);
+
+      ctx.fillStyle = "#ff3b3b";
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = "#ff2a2a";
+
+      const mx = mouse.x;
+      const my = mouse.y;
+      const radius = mouse.radius;
+      const radiusSq = radius * radius;
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+
+        const dx = p.x - mx;
+        const dy = p.y - my;
+        const distSq = dx * dx + dy * dy;
+
+        if (distSq < radiusSq) {
+          const dist = Math.sqrt(distSq) || 0.0001;
+          const power = (1 - dist / radius) * SETTINGS.force;
+          p.vx += (dx / dist) * power;
+          p.vy += (dy / dist) * power;
+        }
+
+        p.vx += (p.baseX - p.x) * SETTINGS.ease;
+        p.vy += (p.baseY - p.y) * SETTINGS.ease;
+
+        p.vx *= SETTINGS.friction;
+        p.vy *= SETTINGS.friction;
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        ctx.fillRect(
+          p.x - SETTINGS.particleSize / 2,
+          p.y - SETTINGS.particleSize / 2,
+          SETTINGS.particleSize,
+          SETTINGS.particleSize
+        );
+      }
+
+      requestAnimationFrame(animate);
+    }
 
     window.addEventListener("mousemove", (e) => {
       mouse.x = e.clientX;
@@ -93,49 +149,11 @@
     });
 
     window.addEventListener("mouseleave", () => {
-      mouse.x = -9999;
-      mouse.y = -9999;
+      mouse.x = 99999;
+      mouse.y = 99999;
     });
 
-    function animate() {
-      ctx.clearRect(0, 0, w, h);
-
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-
-        const dx = p.x - mouse.x;
-        const dy = p.y - mouse.y;
-        const distSq = dx * dx + dy * dy;
-        const radiusSq = mouse.radius * mouse.radius;
-
-        if (distSq < radiusSq) {
-          const dist = Math.sqrt(distSq) || 0.001;
-          const force = (mouse.radius - dist) / mouse.radius;
-          const push = force * 2.8;
-
-          p.vx += (dx / dist) * push;
-          p.vy += (dy / dist) * push;
-        }
-
-        p.vx += (p.baseX - p.x) * 0.035;
-        p.vy += (p.baseY - p.y) * 0.035;
-
-        p.vx *= 0.86;
-        p.vy *= 0.86;
-
-        p.x += p.vx;
-        p.y += p.vy;
-
-        ctx.beginPath();
-        ctx.fillStyle = "#ff2e63";
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = "#ff2e63";
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      requestAnimationFrame(animate);
-    }
+    window.addEventListener("resize", resize);
 
     resize();
     animate();
