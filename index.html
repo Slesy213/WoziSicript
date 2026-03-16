@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ad Soyad Paneli</title>
+  <title>Senin İçin ❤️</title>
   <style>
     * {
       margin: 0;
@@ -13,109 +13,231 @@
     }
 
     body {
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 100vh;
     }
 
-    .panel {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
-      padding: 30px;
-      border-radius: 20px;
-      width: 350px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
-      color: white;
-    }
-
-    .panel h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 26px;
-    }
-
-    .input-group {
-      margin-bottom: 15px;
-    }
-
-    .input-group label {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 14px;
-    }
-
-    .input-group input {
+    .hearts {
+      position: fixed;
       width: 100%;
-      padding: 12px;
-      border: none;
-      outline: none;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.15);
-      color: white;
-      font-size: 15px;
+      height: 100%;
+      overflow: hidden;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0;
     }
 
-    .input-group input::placeholder {
+    .heart {
+      position: absolute;
+      bottom: -20px;
       color: rgba(255,255,255,0.7);
+      animation: rise 8s linear infinite;
+      font-size: 20px;
     }
 
-    button {
-      width: 100%;
-      padding: 12px;
+    @keyframes rise {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.6);
+        opacity: 0;
+      }
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: auto;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .hero {
+      padding: 80px 20px 50px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: auto;
+      line-height: 1.7;
+      background: rgba(255,255,255,0.12);
+      padding: 18px;
+      border-radius: 18px;
+      backdrop-filter: blur(8px);
+    }
+
+    .btn {
+      margin-top: 25px;
+      padding: 14px 28px;
       border: none;
-      border-radius: 10px;
-      background: #38bdf8;
-      color: white;
-      font-size: 16px;
+      border-radius: 30px;
+      background: white;
+      color: #e75480;
+      font-size: 1rem;
+      font-weight: bold;
       cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .btn:hover {
+      transform: scale(1.06);
+    }
+
+    .surprise-box {
+      display: none;
+      margin-top: 20px;
+      background: rgba(255,255,255,0.15);
+      padding: 20px;
+      border-radius: 20px;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .section-title {
+      font-size: 2rem;
+      margin: 50px 0 25px;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 22px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.18);
       transition: 0.3s;
     }
 
-    button:hover {
-      background: #0ea5e9;
+    .gallery img:hover {
+      transform: scale(1.03);
     }
 
-    .sonuc {
-      margin-top: 18px;
-      text-align: center;
-      font-size: 16px;
-      color: #7dd3fc;
+    .message-card {
+      margin-top: 20px;
+      background: rgba(255,255,255,0.14);
+      padding: 25px;
+      border-radius: 22px;
+      line-height: 1.9;
+      font-size: 1.1rem;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .footer {
+      margin-top: 60px;
+      padding: 20px;
+      font-size: 0.95rem;
+      opacity: 0.95;
+    }
+
+    @media (max-width: 700px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero p,
+      .message-card,
+      .surprise-box {
+        font-size: 1rem;
+      }
+
+      .gallery img {
+        height: 230px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="panel">
-    <h2>Ad Soyad Paneli</h2>
 
-    <div class="input-group">
-      <label>Ad</label>
-      <input type="text" id="ad" placeholder="Adınızı girin">
+  <div class="hearts" id="hearts"></div>
+
+  <div class="container">
+    <section class="hero">
+      <h1>Canıma Özel Bir Sayfa ❤️</h1>
+      <p>
+        Bu küçük siteyi senin için hazırladım. 
+        Çünkü bazen birkaç kelime yetmiyor, insan hissettiklerini biraz daha özel göstermek istiyor.
+        Buradaki her şey sen gülün diye.
+      </p>
+      <button class="btn" onclick="showSurprise()">Sürprizi Aç 💌</button>
+      <div class="surprise-box" id="surpriseBox">
+        İyi ki varsın.  
+        Hayatıma kattığın güzel enerji, mutluluk ve içimi ısıtan o güzel halin için teşekkür ederim.  
+        Bu site küçük olabilir ama anlamı büyük: sen özelsin. ❤️
+      </div>
+    </section>
+
+    <h2 class="section-title">Birlikte Güzel Anılar 📸</h2>
+    <div class="gallery">
+      <img src="FOTO1.jpg" alt="Fotoğraf 1">
+      <img src="FOTO2.jpg" alt="Fotoğraf 2">
+      <img src="FOTO3.jpg" alt="Fotoğraf 3">
     </div>
 
-    <div class="input-group">
-      <label>Soyad</label>
-      <input type="text" id="soyad" placeholder="Soyadınızı girin">
+    <h2 class="section-title">Sana Küçük Bir Not ✨</h2>
+    <div class="message-card">
+      Bazen uzun uzun konuşmaya gerek kalmadan da insan birini ne kadar önemsediğini hissedebiliyor.  
+      Ben de bu sayfayı, sana değer verdiğimi güzel bir şekilde göstermek için hazırladım.  
+      Gülüşün hep güzel kalsın, moralin hep yüksek olsun, günlerin de hep güzel geçsin.  
+      Bu sayfaya ne zaman girersen gir, burada sana bırakılmış tatlı bir iz olduğunu hatırla.
     </div>
 
-    <button onclick="goster()">Göster</button>
-
-    <div class="sonuc" id="sonuc"></div>
+    <div class="footer">
+      Senin için hazırlandı ❤️
+    </div>
   </div>
 
   <script>
-    function goster() {
-      const ad = document.getElementById("ad").value;
-      const soyad = document.getElementById("soyad").value;
-      const sonuc = document.getElementById("sonuc");
-
-      if (ad === "" || soyad === "") {
-        sonuc.innerHTML = "Lütfen ad ve soyad gir.";
+    function showSurprise() {
+      const box = document.getElementById("surpriseBox");
+      if (box.style.display === "block") {
+        box.style.display = "none";
       } else {
-        sonuc.innerHTML = "Hoş geldin, " + ad + " " + soyad + "!";
+        box.style.display = "block";
       }
     }
+
+    const hearts = document.getElementById("hearts");
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+      heart.style.animationDuration = (Math.random() * 3 + 5) + "s";
+      heart.style.opacity = Math.random();
+      hearts.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 8000);
+    }
+
+    setInterval(createHeart, 300);
   </script>
 </body>
 </html>
