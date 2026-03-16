@@ -175,7 +175,7 @@
     .content {
       position: relative;
       z-index: 5;
-      padding-bottom: 100px;
+      padding-bottom: 80px;
       background: linear-gradient(to bottom, rgba(5,5,5,0), rgba(5,5,5,0.88) 15%, #050505 40%);
     }
 
@@ -238,33 +238,6 @@
       letter-spacing: 1px;
     }
 
-    .music-btn {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      z-index: 30;
-      border: none;
-      border-radius: 999px;
-      padding: 14px 18px;
-      background: rgba(255, 0, 0, 0.16);
-      color: #fff;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      backdrop-filter: blur(8px);
-      box-shadow:
-        0 0 20px rgba(255, 0, 0, 0.22),
-        inset 0 0 12px rgba(255,255,255,0.05);
-      border: 1px solid rgba(255, 80, 80, 0.25);
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-
-    .music-btn:hover {
-      transform: scale(1.05);
-      background: rgba(255, 0, 0, 0.24);
-    }
-
     @media (max-width: 900px) {
       .gallery-grid {
         grid-template-columns: 1fr;
@@ -272,13 +245,6 @@
 
       .gallery-card img {
         height: 320px;
-      }
-
-      .music-btn {
-        right: 14px;
-        bottom: 14px;
-        padding: 12px 15px;
-        font-size: 14px;
       }
     }
   </style>
@@ -293,11 +259,9 @@
   <div id="sparkles"></div>
   <canvas id="canvas"></canvas>
 
-  <audio id="bgMusic" loop>
+  <audio id="bgMusic" loop autoplay playsinline>
     <source src="muzik.mp3" type="audio/mpeg">
   </audio>
-
-  <button class="music-btn" id="musicBtn">🔇 Müziği Aç</button>
 
   <div class="hero-space">
     <div class="scroll-note" id="scrollNote">Aşağı kaydır ↓</div>
@@ -335,27 +299,19 @@
     const scrollNote = document.getElementById("scrollNote");
     const sparkles = document.getElementById("sparkles");
     const music = document.getElementById("bgMusic");
-    const musicBtn = document.getElementById("musicBtn");
-
-    let musicPlaying = false;
 
     music.volume = 0.6;
 
-    musicBtn.addEventListener("click", async () => {
+    async function tryPlayMusic() {
       try {
-        if (!musicPlaying) {
-          await music.play();
-          musicPlaying = true;
-          musicBtn.textContent = "🔊 Müziği Kapat";
-        } else {
-          music.pause();
-          musicPlaying = false;
-          musicBtn.textContent = "🔇 Müziği Aç";
-        }
-      } catch (err) {
-        alert("Müzik açılmadı. Dosya adını kontrol et: muzik.mp3");
-      }
-    });
+        await music.play();
+      } catch (e) {}
+    }
+
+    window.addEventListener("load", tryPlayMusic);
+
+    document.addEventListener("click", tryPlayMusic, { once: true });
+    document.addEventListener("touchstart", tryPlayMusic, { once: true });
 
     hazirText.classList.add("show");
 
