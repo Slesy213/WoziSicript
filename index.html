@@ -3,638 +3,119 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WoziScript | Ücretsiz Roblox Sistemleri</title>
+  <title>Ad Soyad Paneli</title>
   <style>
-    :root{
-      --bg:#050816;
-      --card:rgba(10,16,34,.80);
-      --line:rgba(255,255,255,.10);
-      --text:#f8fbff;
-      --muted:#b7c4df;
-      --cyan:#35e7ff;
-      --mint:#32ffb4;
-      --shadow:0 20px 60px rgba(0,0,0,.38);
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
     }
 
-    *{margin:0;padding:0;box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      font-family:Arial,Helvetica,sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      overflow-x:hidden;
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    a{text-decoration:none;color:inherit}
-
-    #bgVideo{
-      position:fixed;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      z-index:-3;
-      filter:saturate(1.05) brightness(.35);
+    .panel {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 20px;
+      width: 350px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+      color: white;
     }
 
-    .video-overlay{
-      position:fixed;
-      inset:0;
-      z-index:-2;
-      background:
-        radial-gradient(circle at 15% 20%, rgba(53,231,255,.18), transparent 24%),
-        radial-gradient(circle at 80% 15%, rgba(50,255,180,.14), transparent 24%),
-        linear-gradient(180deg, rgba(2,6,16,.45), rgba(2,6,16,.82) 55%, rgba(2,6,16,.97));
-      pointer-events:none;
+    .panel h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 26px;
     }
 
-    .grid-overlay{
-      position:fixed;
-      inset:0;
-      z-index:-1;
-      background-image:
-        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-      background-size:36px 36px;
-      mask-image:linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,.15));
-      pointer-events:none;
+    .input-group {
+      margin-bottom: 15px;
     }
 
-    .navbar{
-      position:sticky;
-      top:0;
-      z-index:50;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:18px 6%;
-      background:rgba(4,8,20,.72);
-      backdrop-filter:blur(16px);
-      border-bottom:1px solid rgba(255,255,255,.08);
+    .input-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
     }
 
-    .logo{
-      font-size:30px;
-      font-weight:900;
-      letter-spacing:.5px;
-      color:var(--cyan);
-      text-shadow:0 0 18px rgba(53,231,255,.35);
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      outline: none;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.15);
+      color: white;
+      font-size: 15px;
     }
 
-    .nav-links{
-      display:flex;
-      gap:24px;
-      align-items:center;
-      flex-wrap:wrap;
+    .input-group input::placeholder {
+      color: rgba(255,255,255,0.7);
     }
 
-    .nav-links a{
-      color:#dbe7ff;
-      font-size:15px;
-      transition:.2s;
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #38bdf8;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
     }
 
-    .nav-links a:hover{color:var(--cyan)}
-
-    .nav-cta{
-      padding:11px 18px;
-      border-radius:14px;
-      background:linear-gradient(90deg,var(--cyan),var(--mint));
-      color:#07111d !important;
-      font-weight:800;
-      box-shadow:0 0 24px rgba(53,231,255,.22);
+    button:hover {
+      background: #0ea5e9;
     }
 
-    .hero{
-      min-height:calc(100vh - 76px);
-      display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:30px;
-      align-items:center;
-      padding:72px 6% 56px;
-    }
-
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 14px;
-      border:1px solid rgba(53,231,255,.22);
-      background:rgba(53,231,255,.08);
-      color:#9df4ff;
-      border-radius:999px;
-      font-size:13px;
-      font-weight:800;
-      margin-bottom:20px;
-    }
-
-    .hero h1{
-      font-size:62px;
-      line-height:1.02;
-      letter-spacing:-1.4px;
-      margin-bottom:18px;
-      max-width:780px;
-    }
-
-    .hero h1 span{
-      color:var(--cyan);
-      text-shadow:0 0 24px rgba(53,231,255,.28);
-    }
-
-    .hero p{
-      color:var(--muted);
-      font-size:18px;
-      line-height:1.75;
-      max-width:720px;
-      margin-bottom:26px;
-    }
-
-    .hero-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:14px;
-      margin-bottom:26px;
-    }
-
-    .btn{
-      display:inline-block;
-      padding:14px 22px;
-      border-radius:16px;
-      font-weight:800;
-      transition:.22s ease;
-    }
-
-    .btn-primary{
-      background:linear-gradient(90deg,var(--cyan),var(--mint));
-      color:#06111d;
-      box-shadow:0 0 28px rgba(53,231,255,.20);
-    }
-
-    .btn-primary:hover,.download-btn:hover{
-      transform:translateY(-3px);
-      box-shadow:0 16px 38px rgba(53,231,255,.16);
-    }
-
-    .btn-ghost{
-      background:rgba(255,255,255,.045);
-      color:#eef7ff;
-      border:1px solid rgba(255,255,255,.10);
-    }
-
-    .hero-stats{
-      display:flex;
-      gap:16px;
-      flex-wrap:wrap;
-      margin-top:14px;
-    }
-
-    .stat{
-      min-width:150px;
-      padding:17px 18px;
-      border:1px solid var(--line);
-      border-radius:20px;
-      background:rgba(7,12,25,.48);
-      backdrop-filter:blur(12px);
-    }
-
-    .stat b{
-      display:block;
-      font-size:26px;
-      margin-bottom:6px;
-      color:var(--cyan);
-    }
-
-    .stat span{color:#abc0df;font-size:13px}
-
-    .hero-panel{
-      position:relative;
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-      border:1px solid var(--line);
-      border-radius:30px;
-      padding:26px;
-      box-shadow:var(--shadow);
-      overflow:hidden;
-    }
-
-    .hero-panel::before{
-      content:"";
-      position:absolute;
-      width:320px;
-      height:320px;
-      right:-90px;
-      top:-90px;
-      border-radius:50%;
-      background:radial-gradient(circle, rgba(53,231,255,.22), transparent 68%);
-      pointer-events:none;
-    }
-
-    .window-bar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:18px;
-      position:relative;
-      z-index:1;
-    }
-
-    .dots{display:flex;gap:8px}
-    .dots span{width:11px;height:11px;border-radius:50%;display:block;background:rgba(255,255,255,.18)}
-
-    .live-tag{
-      font-size:12px;
-      font-weight:800;
-      color:#95ffd3;
-      background:rgba(50,255,180,.10);
-      border:1px solid rgba(50,255,180,.20);
-      padding:8px 12px;
-      border-radius:999px;
-    }
-
-    .featured-card{
-      position:relative;
-      z-index:1;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(5,10,24,.78);
-      border-radius:24px;
-      padding:24px;
-    }
-
-    .featured-card .tag{
-      display:inline-block;
-      padding:7px 12px;
-      border-radius:10px;
-      background:rgba(53,231,255,.12);
-      border:1px solid rgba(53,231,255,.16);
-      color:#88f1ff;
-      font-size:12px;
-      font-weight:900;
-      margin-bottom:14px;
-    }
-
-    .featured-card h3{font-size:30px;margin-bottom:10px}
-    .featured-card p{color:var(--muted);line-height:1.7;margin-bottom:18px}
-
-    .featured-features{
-      display:grid;
-      gap:12px;
-    }
-
-    .featured-features div{
-      padding:13px 14px;
-      border-radius:14px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.05);
-      color:#e4efff;
-      font-size:14px;
-    }
-
-    section{padding:86px 6%}
-
-    .section-head{
-      text-align:center;
-      max-width:820px;
-      margin:0 auto 42px;
-    }
-
-    .section-head h2{font-size:42px;margin-bottom:12px}
-    .section-head p{color:var(--muted);line-height:1.75}
-
-    .systems{
-      display:grid;
-      gap:26px;
-    }
-
-    .system-card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:28px;
-      overflow:hidden;
-      box-shadow:var(--shadow);
-      backdrop-filter:blur(14px);
-    }
-
-    .system-top{
-      display:grid;
-      grid-template-columns:380px 1fr;
-    }
-
-    .system-image{
-      min-height:270px;
-      background:linear-gradient(135deg, rgba(53,231,255,.18), rgba(50,255,180,.10));
-      border-right:1px solid rgba(255,255,255,.08);
-      position:relative;
-      overflow:hidden;
-    }
-
-    .system-image img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
-    .image-placeholder{
-      position:absolute;
-      inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:20px;
-      color:#bfefff;
-      font-weight:800;
-      font-size:22px;
-      letter-spacing:.4px;
-      background:
-        radial-gradient(circle at top left, rgba(53,231,255,.16), transparent 36%),
-        linear-gradient(135deg, rgba(9,15,32,.92), rgba(11,19,40,.92));
-    }
-
-    .system-content{
-      padding:26px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-    }
-
-    .system-badge{
-      display:inline-block;
-      padding:7px 11px;
-      border-radius:10px;
-      font-size:12px;
-      font-weight:900;
-      margin-bottom:14px;
-      background:rgba(53,231,255,.10);
-      border:1px solid rgba(53,231,255,.16);
-      color:#90f1ff;
-    }
-
-    .system-content h3{
-      font-size:30px;
-      margin-bottom:10px;
-    }
-
-    .system-content p{
-      color:var(--muted);
-      line-height:1.75;
-      margin-bottom:18px;
-    }
-
-    .system-meta{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-bottom:20px;
-    }
-
-    .system-meta span{
-      padding:9px 12px;
-      border-radius:12px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.07);
-      color:#dbe8ff;
-      font-size:13px;
-      font-weight:700;
-    }
-
-    .download-area{
-      border-top:1px solid rgba(255,255,255,.08);
-      padding:22px 26px 26px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:16px;
-      flex-wrap:wrap;
-    }
-
-    .download-info h4{
-      font-size:20px;
-      margin-bottom:8px;
-    }
-
-    .download-info p{
-      color:var(--muted);
-      line-height:1.7;
-    }
-
-    .download-btn{
-      display:inline-block;
-      padding:14px 20px;
-      border-radius:16px;
-      font-weight:900;
-      background:linear-gradient(90deg,var(--cyan),var(--mint));
-      color:#06111c;
-      transition:.2s;
-      white-space:nowrap;
-    }
-
-    .about-box,.contact-box{
-      max-width:980px;
-      margin:0 auto;
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:28px;
-      padding:34px;
-      box-shadow:var(--shadow);
-      color:#d8e5fb;
-      line-height:1.8;
-      backdrop-filter:blur(12px);
-    }
-
-    .contact-grid{
-      max-width:1040px;
-      margin:0 auto;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:24px;
-    }
-
-    .contact-box h3{font-size:28px;margin-bottom:10px}
-    .contact-box p{color:var(--muted);margin-bottom:12px}
-    .contact-box a{color:var(--cyan);font-weight:800}
-
-    footer{
-      padding:28px 6%;
-      text-align:center;
-      border-top:1px solid rgba(255,255,255,.08);
-      background:rgba(0,0,0,.18);
-      color:#99afd0;
-    }
-
-    @media (max-width:1024px){
-      .hero{grid-template-columns:1fr}
-      .hero h1{font-size:50px}
-      .contact-grid{grid-template-columns:1fr}
-      .system-top{grid-template-columns:1fr}
-      .system-image{min-height:220px;border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}
-    }
-
-    @media (max-width:700px){
-      .navbar{padding:16px 4%}
-      .hero,section{padding-left:4%;padding-right:4%}
-      .hero h1{font-size:38px}
-      .section-head h2{font-size:33px}
-      .nav-links{gap:14px}
-      .logo{font-size:24px}
-      .system-content h3{font-size:24px}
-      .download-area{align-items:flex-start}
+    .sonuc {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 16px;
+      color: #7dd3fc;
     }
   </style>
 </head>
 <body>
-  <video autoplay muted loop playsinline id="bgVideo">
-    <source src="https://cdn.coverr.co/videos/coverr-programming-on-a-computer-1561087232142?download=1080p" type="video/mp4">
-  </video>
-  <div class="video-overlay"></div>
-  <div class="grid-overlay"></div>
+  <div class="panel">
+    <h2>Ad Soyad Paneli</h2>
 
-  <nav class="navbar">
-    <div class="logo">WoziScript</div>
-    <div class="nav-links">
-      <a href="#home">Ana Sayfa</a>
-      <a href="#systems">Sistemler</a>
-      <a href="#about">Hakkımda</a>
-      <a href="#contact" class="nav-cta">İletişim</a>
-    </div>
-  </nav>
-
-  <section class="hero" id="home">
-    <div>
-      <div class="eyebrow">⚡ Ücretsiz Roblox Sistem Dağıtım Sitesi</div>
-      <h1>Yaptığım <span>sistemleri ücretsiz</span> dosya olarak paylaşıyorum.</h1>
-      <p>
-        WoziScript artık tam olarak dosya dağıtım mantığıyla düzenlendi. Her sistem için görsel koyabilir, kısa açıklama yazabilir ve en alta kullanıcıların dosyayı indireceği bir buton ekleyebilirsin. Kod sitede görünmez, dosyanın içinde olur.
-      </p>
-      <div class="hero-actions">
-        <a href="#systems" class="btn btn-primary">Sistemlere Git</a>
-        <a href="#contact" class="btn btn-ghost">Bana Ulaş</a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat"><b>Bedava</b><span>Tüm sistemler ücretsiz</span></div>
-        <div class="stat"><b>Dosya</b><span>İndirme odaklı yapı</span></div>
-        <div class="stat"><b>Düzenli</b><span>Görsel + açıklama + indir</span></div>
-      </div>
+    <div class="input-group">
+      <label>Ad</label>
+      <input type="text" id="ad" placeholder="Adınızı girin">
     </div>
 
-    <div class="hero-panel">
-      <div class="window-bar">
-        <div class="dots"><span></span><span></span><span></span></div>
-        <div class="live-tag">● Yeni Sistemler Yüklenecek</div>
-      </div>
-      <div class="featured-card">
-        <span class="tag">SİTE MANTIĞI</span>
-        <h3>Nasıl paylaşacaksın?</h3>
-        <p>Her yeni sistem için bir kart ekleyeceksin. Üste sistemin görseli, ortaya kısa bilgi, alta da dosya indirme butonu gelecek. Dosyayı kullanıcı indirip sistemin içeriğine oradan ulaşacak.</p>
-        <div class="featured-features">
-          <div>✔ Sistem görseli ekleme alanı</div>
-          <div>✔ Açıklama ve özellik kutuları</div>
-          <div>✔ Dosya indirme butonu</div>
-          <div>✔ Kod göstermeden temiz paylaşım</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="systems">
-    <div class="section-head">
-      <h2>Paylaşılan Sistemler</h2>
-      <p>Aşağıdaki yapı senin istediğin mantığa göre hazırlandı. Yeni sistem yaptıkça kartı çoğaltıp sadece görseli, açıklamayı ve dosya linkini değiştirmen yeterli.</p>
+    <div class="input-group">
+      <label>Soyad</label>
+      <input type="text" id="soyad" placeholder="Soyadınızı girin">
     </div>
 
-    <div class="systems">
-      <article class="system-card">
-        <div class="system-top">
-          <div class="system-image">
-            <div class="image-placeholder">BURAYA<br>SİSTEM FOTOĞRAFI<br>EKLENECEK</div>
-            <img src="images/Ekran görüntüsü 2026-03-08 144135.png" alt="Admin Menü Sistemi">
+    <button onclick="goster()">Göster</button>
 
-          </div>
-          <div class="system-content">
-            <span class="system-badge">ÖRNEK SİSTEM</span>
-            <h3>Admin Menü Sistemi</h3>
-            <p>
-              Bu alana sistemin ne işe yaradığını yazarsın. Mesela oyuncu işlemleri, log sistemi, bildirim sistemi, yetkili araçları gibi detayları burada gösterebilirsin.
-            </p>
-            <div class="system-meta">
-              <span>Kategori: Admin</span>
-              <span>Sürüm: V1</span>
-              <span>Durum: Ücretsiz</span>
-            </div>
-          </div>
-        </div>
-        <div class="download-area">
-          <div class="download-info">
-            <h4>Dosya İndir</h4>
-            <p>Bu butona tıklayan kullanıcı sistem dosyasını indirir. Kod veya içerik dosyanın içinde olur.</p>
-          </div>
-          <a class="download-btn" href="files/admin.rbxl" download>Dosyayı İndir</a>
-        </div>
-      </article>
+    <div class="sonuc" id="sonuc"></div>
+  </div>
 
-      <article class="system-card">
-        <div class="system-top">
-          <div class="system-image">
-            <div class="image-placeholder">BURAYA<br>2. SİSTEMİN<br>GÖRSELİ</div>
-            <!-- Örnek kullanım:
-            <img src="images/siren.png" alt="Siren Sistemi">
-            -->
-          </div>
-          <div class="system-content">
-            <span class="system-badge">YENİ SİSTEM</span>
-            <h3>Araç & Siren Sistemi</h3>
-            <p>
-              Bu bölüme ikinci sistemin açıklamasını yazarsın. Örnek olarak siren açma kapama, araç içi kullanım ve ses sistemi gibi detayları anlatabilirsin.
-            </p>
-            <div class="system-meta">
-              <span>Kategori: Araç</span>
-              <span>Sürüm: V1</span>
-              <span>Durum: Ücretsiz</span>
-            </div>
-          </div>
-        </div>
-        <div class="download-area">
-          <div class="download-info">
-            <h4>Dosya İndir</h4>
-            <p>Kullanıcı burada sistemi zip veya başka dosya olarak indirebilir.</p>
-          </div>
-          <a class="download-btn" href="files/siren-system.zip" download>Dosyayı İndir</a>
-        </div>
-      </article>
-    </div>
-  </section>
+  <script>
+    function goster() {
+      const ad = document.getElementById("ad").value;
+      const soyad = document.getElementById("soyad").value;
+      const sonuc = document.getElementById("sonuc");
 
-  <section id="about">
-    <div class="section-head">
-      <h2>WoziScript Nedir?</h2>
-      <p>Bu site Roblox sistemlerini ücretsiz dosya halinde paylaşman için hazırlandı. Mantık basit: görsel koy, açıklama yaz, dosya indir butonu ekle.</p>
-    </div>
-    <div class="about-box">
-      WoziScript, yaptığın sistemleri düzenli ve profesyonel şekilde paylaşman için oluşturulmuş bir dağıtım sitesidir. Burada kodu sitede göstermek yerine sistemi dosya halinde paylaşırsın. Böylece sayfa daha temiz görünür ve kullanıcılar sistemi doğrudan indirir.
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="section-head">
-      <h2>İletişim</h2>
-      <p>İstersen buraya Discord, GitHub veya başka sosyal medya linklerini ekleyebilirsin.</p>
-    </div>
-    <div class="contact-grid">
-      <div class="contact-box">
-        <h3>Bana Ulaş</h3>
-        <p>Yeni sistem önerileri, destek veya iletişim için kendi linklerini buraya koy.</p>
-        <p><a href="#">Discord: discord.gg/ornek</a></p>
-        <p><a href="#">GitHub: github.com/Slesy213</a></p>
-      </div>
-      <div class="contact-box">
-        <h3>Nasıl yeni sistem eklersin?</h3>
-        <p>Mevcut sistem kartını kopyala, başlığı değiştir, açıklamayı değiştir, fotoğrafı ekle ve en alttaki indirme linkini yeni dosyanla değiştir. Bu kadar.</p>
-        <p>Örnek dosya yolu: <b>files/admin-menu.zip</b></p>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    © 2026 WoziScript — Ücretsiz Roblox Sistem Dağıtım Sitesi
-  </footer>
+      if (ad === "" || soyad === "") {
+        sonuc.innerHTML = "Lütfen ad ve soyad gir.";
+      } else {
+        sonuc.innerHTML = "Hoş geldin, " + ad + " " + soyad + "!";
+      }
+    }
+  </script>
 </body>
 </html>
