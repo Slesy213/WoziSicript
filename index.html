@@ -7,7 +7,6 @@
   <style>
     html, body {
       margin: 0;
-      padding: 0;
       width: 100%;
       height: 100%;
       overflow: hidden;
@@ -20,14 +19,16 @@
   </style>
 </head>
 <body>
-  <canvas id="canvas"></canvas>
+  <canvas id="c"></canvas>
 
   <script>
-    const canvas = document.getElementById("canvas");
+    const canvas = document.getElementById("c");
     const ctx = canvas.getContext("2d");
 
-    let w = canvas.width = window.innerWidth;
-    let h = canvas.height = window.innerHeight;
+    let w = 0;
+    let h = 0;
+    let cx = 0;
+    let cy = 0;
 
     const mouse = {
       x: -9999,
@@ -36,15 +37,55 @@
     };
 
     const particles = [];
-    const particleCount = 4500;
+    const GAP = 7; // küçültürsen daha dolu olur ama biraz daha yük bindirir
 
-    function resizeCanvas() {
+    function resize() {
       w = canvas.width = window.innerWidth;
       h = canvas.height = window.innerHeight;
-      createHeartParticles();
+      cx = w / 2;
+      cy = h / 2;
+      buildHeart();
     }
 
-    window.addEventListener("resize", resizeCanvas);
+    function heartEquation(x, y) {
+      const a = x * x + y * y - 1;
+      return a * a * a - x * x * y * y * y;
+    }
+
+    function buildHeart() {
+      particles.length = 0;
+
+      const scale = Math.min(w, h) * 0.022;
+
+      for (let px = -18; px <= 18; px += 0.45) {
+        for (let py = -18; py <= 18; py += 0.45) {
+          const x = px / 18;
+          const y = py / 18;
+
+          if (heartEquation(x, y) <= 0) {
+            const tx = cx + px * scale / 18;
+            const ty = cy - py * scale / 18;
+
+            if (
+              Math.round((tx - cx + 9999) / GAP) % 1 === 0 &&
+              Math.round((ty - cy + 9999) / GAP) % 1 === 0
+            ) {
+              particles.push({
+                x: tx,
+                y: ty,
+                baseX: tx,
+                baseY: ty,
+                vx: 0,
+                vy: 0,
+                size: 2.2 + Math.random() * 1.2
+              });
+            }
+          }
+        }
+      }
+    }
+
+    window.addEventListener("resize", resize);
 
     window.addEventListener("mousemove", (e) => {
       mouse.x = e.clientX;
@@ -56,81 +97,39 @@
       mouse.y = -9999;
     });
 
-    function isInsideHeart(x, y) {
-      const nx = x / 18;
-      const ny = y / 18;
-      const a = nx * nx + ny * ny - 1;
-      return (a * a * a - nx * nx * ny * ny * ny) <= 0;
-    }
-
-    function randomPointInHeart() {
-      while (true) {
-        const x = (Math.random() * 2 - 1) * 18;
-        const y = (Math.random() * 2 - 1) * 18;
-        if (isInsideHeart(x, y)) {
-          return { x, y };
-        }
-      }
-    }
-
-    function createHeartParticles() {
-      particles.length = 0;
-
-      const scale = Math.min(w, h) * 0.018;
-      const centerX = w / 2;
-      const centerY = h / 2 + 10;
-
-      for (let i = 0; i < particleCount; i++) {
-        const p = randomPointInHeart();
-
-        const tx = centerX + p.x * scale;
-        const ty = centerY - p.y * scale;
-
-        particles.push({
-          x: tx,
-          y: ty,
-          baseX: tx,
-          baseY: ty,
-          vx: 0,
-          vy: 0,
-          size: Math.random() * 1.8 + 0.8,
-          alpha: Math.random() * 0.5 + 0.5
-        });
-      }
-    }
-
-    createHeartParticles();
-
     function animate() {
       ctx.clearRect(0, 0, w, h);
 
-      for (const p of particles) {
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+
         const dx = p.x - mouse.x;
         const dy = p.y - mouse.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+        const distSq = dx * dx + dy * dy;
+        const radiusSq = mouse.radius * mouse.radius;
 
-        if (dist < mouse.radius) {
+        if (distSq < radiusSq) {
+          const dist = Math.sqrt(distSq) || 0.001;
           const force = (mouse.radius - dist) / mouse.radius;
-          const angle = Math.atan2(dy, dx);
-          p.vx += Math.cos(angle) * force * 3.2;
-          p.vy += Math.sin(angle) * force * 3.2;
+          const push = force * 2.8;
+
+          p.vx += (dx / dist) * push;
+          p.vy += (dy / dist) * push;
         }
 
-        p.vx += (p.baseX - p.x) * 0.018;
-        p.vy += (p.baseY - p.y) * 0.018;
+        p.vx += (p.baseX - p.x) * 0.035;
+        p.vy += (p.baseY - p.y) * 0.035;
 
-        p.vx *= 0.92;
-        p.vy *= 0.92;
+        p.vx *= 0.86;
+        p.vy *= 0.86;
 
         p.x += p.vx;
         p.y += p.vy;
 
-        const glow = 6;
-
         ctx.beginPath();
-        ctx.fillStyle = `rgba(255, 40, 40, ${p.alpha})`;
-        ctx.shadowBlur = glow;
-        ctx.shadowColor = "rgba(255, 0, 0, 0.9)";
+        ctx.fillStyle = "#ff2e63";
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = "#ff2e63";
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
       }
@@ -138,6 +137,7 @@
       requestAnimationFrame(animate);
     }
 
+    resize();
     animate();
   </script>
 </body>
