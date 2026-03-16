@@ -20,6 +20,50 @@
       color: white;
     }
 
+    #sparkles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.95);
+      box-shadow:
+        0 0 6px rgba(255,255,255,0.95),
+        0 0 12px rgba(255,80,80,0.45),
+        0 0 18px rgba(255,0,0,0.25);
+      animation: sparkleFloat linear forwards;
+    }
+
+    .sparkle.big {
+      width: 5px;
+      height: 5px;
+    }
+
+    @keyframes sparkleFloat {
+      0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.6);
+      }
+      20% {
+        opacity: 1;
+        transform: translateY(0px) scale(1);
+      }
+      80% {
+        opacity: 0.9;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-80px) scale(0.8);
+      }
+    }
+
     canvas {
       display: block;
       width: 100%;
@@ -103,6 +147,31 @@
       z-index: 3;
     }
 
+    .scroll-note {
+      position: absolute;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      z-index: 6;
+      color: rgba(255,255,255,0.75);
+      font-size: 15px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 12px rgba(255,0,0,0.25);
+      animation: upDown 1.8s ease-in-out infinite;
+      opacity: 0;
+      transition: opacity 1s ease;
+      pointer-events: none;
+    }
+
+    .scroll-note.show {
+      opacity: 1;
+    }
+
+    @keyframes upDown {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-8px); }
+    }
+
     .content {
       position: relative;
       z-index: 5;
@@ -169,13 +238,6 @@
       letter-spacing: 1px;
     }
 
-    .footer-note {
-      text-align: center;
-      color: rgba(255,255,255,0.65);
-      font-size: 14px;
-      margin-top: 10px;
-    }
-
     @media (max-width: 900px) {
       .gallery-grid {
         grid-template-columns: 1fr;
@@ -194,9 +256,12 @@
   </div>
 
   <div class="bg-text" id="bgText">! aura</div>
+  <div id="sparkles"></div>
   <canvas id="canvas"></canvas>
 
-  <div class="hero-space"></div>
+  <div class="hero-space">
+    <div class="scroll-note" id="scrollNote">Aşağı kaydır ↓</div>
+  </div>
 
   <div class="content">
     <section class="gallery-section">
@@ -204,23 +269,19 @@
 
       <div class="gallery-grid">
         <div class="gallery-card">
-          <img src="resim1.jpg" alt="resim1" />
+          <img src="resim1.jpg" alt="resim1">
           <div class="gallery-label">resim1</div>
         </div>
 
         <div class="gallery-card">
-          <img src="resim2.jpg" alt="2" />
+          <img src="resim2.jpg" alt="resim2">
           <div class="gallery-label">resim2</div>
         </div>
 
         <div class="gallery-card">
-          <img src="resim3.jpg" alt="3" />
+          <img src="resim3.jpg" alt="resim3">
           <div class="gallery-label">resim3</div>
         </div>
-      </div>
-
-      <div class="footer-note">
-        Slesy / ! aura
       </div>
     </section>
   </div>
@@ -231,6 +292,8 @@
     const efsunText = document.getElementById("efsunText");
     const bgText = document.getElementById("bgText");
     const canvas = document.getElementById("canvas");
+    const scrollNote = document.getElementById("scrollNote");
+    const sparkles = document.getElementById("sparkles");
 
     hazirText.classList.add("show");
 
@@ -250,7 +313,24 @@
       introScreen.classList.add("hide");
       bgText.classList.add("show");
       canvas.style.opacity = "1";
+      scrollNote.classList.add("show");
     }, 5000);
+
+    function createSparkle() {
+      const s = document.createElement("div");
+      s.className = Math.random() > 0.8 ? "sparkle big" : "sparkle";
+      s.style.left = Math.random() * window.innerWidth + "px";
+      s.style.top = Math.random() * window.innerHeight + "px";
+      s.style.animationDuration = (2 + Math.random() * 3) + "s";
+      s.style.opacity = Math.random();
+      sparkles.appendChild(s);
+
+      setTimeout(() => {
+        s.remove();
+      }, 5000);
+    }
+
+    setInterval(createSparkle, 140);
 
     const ctx = canvas.getContext("2d", { alpha: true });
 
