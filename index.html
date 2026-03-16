@@ -17,16 +17,41 @@
       display: block;
       width: 100%;
       height: 100%;
-      cursor: default;
+    }
+
+    .bg-text {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      font-family: Arial, sans-serif;
+      font-weight: 900;
+      font-size: clamp(70px, 14vw, 220px);
+      color: rgba(255, 0, 0, 0.18);
+      text-shadow:
+        0 0 20px rgba(255, 0, 0, 0.35),
+        0 0 40px rgba(255, 0, 0, 0.2),
+        0 0 70px rgba(255, 0, 0, 0.15);
+      letter-spacing: 6px;
+      user-select: none;
+      z-index: 0;
+    }
+
+    #canvas {
+      position: relative;
+      z-index: 2;
     }
   </style>
 </head>
 <body>
+  <div class="bg-text">! aura</div>
   <canvas id="canvas"></canvas>
 
   <script>
     const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d", { alpha: false });
+    const ctx = canvas.getContext("2d", { alpha: true });
 
     let w = 0;
     let h = 0;
@@ -36,15 +61,16 @@
     const mouse = {
       x: 99999,
       y: 99999,
-      radius: 90
+      radius: 95
     };
 
     const SETTINGS = {
-      gap: 6,          // küçülürse daha dolu olur ama biraz daha yük bindirir
-      ease: 0.06,      // geri dönme hızı
-      friction: 0.86,  // yumuşama
-      force: 4.2,      // mouse itme gücü
-      particleSize: 1.35
+      gap: 6,
+      ease: 0.055,
+      friction: 0.87,
+      force: 4.4,
+      particleSize: 1.7,
+      glow: 10
     };
 
     function heartFn(x, y) {
@@ -67,7 +93,7 @@
     function buildHeart() {
       particles.length = 0;
 
-      const size = Math.min(w, h) * 0.32;
+      const size = Math.min(w, h) * 0.42; // kalbi büyüttüm
       const step = SETTINGS.gap;
       const centerX = w / 2;
       const centerY = h / 2;
@@ -89,7 +115,8 @@
               baseX: px,
               baseY: py,
               vx: 0,
-              vy: 0
+              vy: 0,
+              size: SETTINGS.particleSize + Math.random() * 0.7
             });
           }
         }
@@ -97,12 +124,7 @@
     }
 
     function animate() {
-      ctx.fillStyle = "#050505";
-      ctx.fillRect(0, 0, w, h);
-
-      ctx.fillStyle = "#ff3b3b";
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = "#ff2a2a";
+      ctx.clearRect(0, 0, w, h);
 
       const mx = mouse.x;
       const my = mouse.y;
@@ -132,12 +154,12 @@
         p.x += p.vx;
         p.y += p.vy;
 
-        ctx.fillRect(
-          p.x - SETTINGS.particleSize / 2,
-          p.y - SETTINGS.particleSize / 2,
-          SETTINGS.particleSize,
-          SETTINGS.particleSize
-        );
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(255, 45, 45, 0.95)";
+        ctx.shadowBlur = SETTINGS.glow;
+        ctx.shadowColor = "rgba(255, 0, 0, 0.95)";
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
       }
 
       requestAnimationFrame(animate);
