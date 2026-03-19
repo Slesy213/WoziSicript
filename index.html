@@ -18,6 +18,60 @@
     body {
       position: relative;
       color: white;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(255, 0, 0, 0.12), transparent 35%),
+        radial-gradient(circle at 20% 80%, rgba(255, 60, 60, 0.08), transparent 30%),
+        radial-gradient(circle at 80% 75%, rgba(255, 30, 30, 0.08), transparent 30%),
+        linear-gradient(to bottom, #020202 0%, #050505 50%, #080808 100%);
+    }
+
+    #bgGlow {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.22;
+      animation: floatOrb linear infinite;
+      background: radial-gradient(circle, rgba(255,0,0,0.65), rgba(255,0,0,0));
+    }
+
+    .orb1 {
+      width: 320px;
+      height: 320px;
+      left: 5%;
+      top: 10%;
+      animation-duration: 16s;
+    }
+
+    .orb2 {
+      width: 420px;
+      height: 420px;
+      right: 6%;
+      top: 18%;
+      animation-duration: 20s;
+    }
+
+    .orb3 {
+      width: 360px;
+      height: 360px;
+      left: 32%;
+      bottom: 10%;
+      animation-duration: 18s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(30px, -20px) scale(1.05); }
+      50% { transform: translate(-20px, 35px) scale(0.95); }
+      75% { transform: translate(25px, 15px) scale(1.04); }
+      100% { transform: translate(0, 0) scale(1); }
     }
 
     #sparkles {
@@ -46,6 +100,14 @@
       height: 5px;
     }
 
+    .dust {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 90, 90, 0.28);
+      box-shadow: 0 0 12px rgba(255, 0, 0, 0.22);
+      animation: dustFloat linear forwards;
+    }
+
     @keyframes sparkleFloat {
       0% {
         opacity: 0;
@@ -61,6 +123,20 @@
       100% {
         opacity: 0;
         transform: translateY(-80px) scale(0.8);
+      }
+    }
+
+    @keyframes dustFloat {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.7);
+      }
+      20% {
+        opacity: 0.65;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-120px) scale(1.2);
       }
     }
 
@@ -213,6 +289,8 @@
         0 0 25px rgba(255, 0, 0, 0.08),
         inset 0 0 20px rgba(255, 255, 255, 0.02);
       transition: transform 0.35s ease, box-shadow 0.35s ease;
+      cursor: pointer;
+      position: relative;
     }
 
     .gallery-card:hover {
@@ -228,6 +306,11 @@
       object-fit: cover;
       display: block;
       background: #111;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-card:hover img {
+      transform: scale(1.04);
     }
 
     .gallery-label {
@@ -278,6 +361,80 @@
       text-shadow: 0 0 12px rgba(255,0,0,0.45);
     }
 
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      padding: 20px;
+    }
+
+    .lightbox.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: min(1100px, 95vw);
+      max-height: 90vh;
+      transform: scale(0.9);
+      transition: transform 0.35s ease;
+    }
+
+    .lightbox.show .lightbox-content {
+      transform: scale(1);
+    }
+
+    .lightbox img {
+      width: 100%;
+      max-width: 1100px;
+      max-height: 82vh;
+      object-fit: contain;
+      display: block;
+      border-radius: 24px;
+      box-shadow:
+        0 0 35px rgba(255, 0, 0, 0.22),
+        0 0 80px rgba(255, 0, 0, 0.12);
+      border: 1px solid rgba(255, 80, 80, 0.25);
+      background: #111;
+    }
+
+    .lightbox-caption {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffd4d4;
+      text-shadow: 0 0 12px rgba(255,0,0,0.25);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 46px;
+      height: 46px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255, 0, 0, 0.92);
+      color: white;
+      font-size: 26px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 0 18px rgba(255, 0, 0, 0.4);
+    }
+
+    .lightbox-close:hover {
+      transform: scale(1.08);
+    }
+
     @media (max-width: 900px) {
       .gallery-grid {
         grid-template-columns: 1fr;
@@ -296,16 +453,27 @@
         min-height: 420px;
         height: 420px;
       }
+
+      .lightbox-close {
+        top: 10px;
+        right: 10px;
+      }
     }
   </style>
 </head>
 <body>
+  <div id="bgGlow">
+    <div class="glow-orb orb1"></div>
+    <div class="glow-orb orb2"></div>
+    <div class="glow-orb orb3"></div>
+  </div>
+
   <div class="intro-screen" id="introScreen">
     <div class="intro-text" id="hazirText">Hazır mısın?</div>
     <div class="intro-text" id="efsunText">Efsuncuk</div>
   </div>
 
-<div class="bg-text" id="bgText">cherrie</div>
+  <div class="bg-text" id="bgText">cherrie</div>
   <div id="sparkles"></div>
   <canvas id="canvas"></canvas>
 
@@ -322,47 +490,55 @@
       <h2 class="gallery-title">Galeri</h2>
 
       <div class="gallery-grid">
-        <div class="gallery-card">
+        <div class="gallery-card" data-image="resim1.jpg" data-caption="Foto 1">
           <img src="resim1.jpg" alt="resim1">
           <div class="gallery-label">Foto 1</div>
         </div>
 
-        <div class="gallery-card">
+        <div class="gallery-card" data-image="resim2.jpg" data-caption="Foto 2">
           <img src="resim2.jpg" alt="resim2">
           <div class="gallery-label">Foto 2</div>
         </div>
 
-        <div class="gallery-card">
+        <div class="gallery-card" data-image="resim3.jpg" data-caption="Foto 3">
           <img src="resim3.jpg" alt="resim3">
           <div class="gallery-label">Foto 3</div>
         </div>
 
-        <div class="gallery-card">
+        <div class="gallery-card" data-image="resim4.jpg" data-caption="Foto 4">
           <img src="resim4.jpg" alt="resim4">
           <div class="gallery-label">Foto 4</div>
         </div>
 
-        <div class="gallery-card">
+        <div class="gallery-card" data-image="resim5.jpg" data-caption="Foto 5">
           <img src="resim5.jpg" alt="resim5">
           <div class="gallery-label">Foto 5</div>
         </div>
 
-        <div class="gallery-card">
+        <div class="gallery-card" data-image="resim6.jpg" data-caption="Foto 6">
           <img src="resim6.jpg" alt="resim6">
           <div class="gallery-label">Foto 6</div>
         </div>
 
-        <div class="gallery-card">
+        <div class="gallery-card" data-image="resim7.jpg" data-caption="Foto 7">
           <img src="resim7.jpg" alt="resim7">
           <div class="gallery-label">Foto 7</div>
         </div>
 
-        <div class="gallery-card featured">
+        <div class="gallery-card featured" data-image="resim8.jpg" data-caption="En Özel Foto">
           <img src="resim8.jpg" alt="resim8">
           <div class="gallery-label">En Özel Foto</div>
         </div>
       </div>
     </section>
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightboxClose">&times;</button>
+      <img id="lightboxImg" src="" alt="Büyütülmüş fotoğraf">
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
   </div>
 
   <script>
@@ -374,6 +550,11 @@
     const scrollNote = document.getElementById("scrollNote");
     const sparkles = document.getElementById("sparkles");
     const music = document.getElementById("bgMusic");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+    const lightboxCaption = document.getElementById("lightboxCaption");
+    const lightboxClose = document.getElementById("lightboxClose");
+    const galleryCards = document.querySelectorAll(".gallery-card");
 
     music.volume = 0.6;
 
@@ -422,7 +603,57 @@
       }, 5000);
     }
 
+    function createDust() {
+      const d = document.createElement("div");
+      const size = 2 + Math.random() * 4;
+      d.className = "dust";
+      d.style.width = size + "px";
+      d.style.height = size + "px";
+      d.style.left = Math.random() * window.innerWidth + "px";
+      d.style.top = window.innerHeight + 20 + "px";
+      d.style.animationDuration = (4 + Math.random() * 5) + "s";
+      sparkles.appendChild(d);
+
+      setTimeout(() => {
+        d.remove();
+      }, 9000);
+    }
+
     setInterval(createSparkle, 140);
+    setInterval(createDust, 260);
+
+    galleryCards.forEach(card => {
+      card.addEventListener("click", () => {
+        const image = card.getAttribute("data-image");
+        const caption = card.getAttribute("data-caption") || "";
+        lightboxImg.src = image;
+        lightboxCaption.textContent = caption;
+        lightbox.classList.add("show");
+        document.body.style.overflow = "hidden";
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove("show");
+      document.body.style.overflow = "";
+      setTimeout(() => {
+        lightboxImg.src = "";
+      }, 250);
+    }
+
+    lightboxClose.addEventListener("click", closeLightbox);
+
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && lightbox.classList.contains("show")) {
+        closeLightbox();
+      }
+    });
 
     const ctx = canvas.getContext("2d", { alpha: true });
 
