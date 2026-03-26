@@ -2,99 +2,162 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ders Takip Listem</title>
     <style>
-        body { 
-            font-family: sans-serif; 
-            background-color: black; 
-            color: white; 
-            padding: 20px; 
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a, #15001f, #000000);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(128, 0, 128, 0.35);
+            backdrop-filter: blur(10px);
         }
 
         h2 {
             text-align: center;
+            margin: 0 0 25px 0;
+            font-size: 32px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(191, 0, 255, 0.7);
         }
 
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
+        .table-box {
+            overflow-x: auto;
+            border-radius: 16px;
         }
 
-        th, td { 
-            border: 1px solid gray; 
-            padding: 12px; 
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        th, td {
+            padding: 16px;
             text-align: center;
             vertical-align: middle;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.25s ease;
         }
 
-        th { 
-            background-color: purple; 
+        th {
+            background: linear-gradient(90deg, #8a00a8, #c000ff);
             color: white;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        td {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        tr:hover td {
+            background: rgba(192, 0, 255, 0.14);
+            transform: scale(1.01);
+        }
+
+        @media (max-width: 900px) {
+            h2 {
+                font-size: 24px;
+            }
+
+            th, td {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            .container {
+                padding: 18px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <h2>Ders Takip Listem</h2>
+    <div class="container">
+        <h2>Ders Takip Listem</h2>
 
-    <table>
-      <tr>
-        <th>Ders Adı</th>
-        <th>Ünite</th>
-        <th>Tamamlanan</th>
-        <th>Devam Eden</th>
-        <th>Kaç Canlı Ders Kaydı Var?</th>
-        <th>Kaç Konu Tabanlı Video Var?</th>
-      </tr>
-      <tr>
-        <td>İleri Programlama I</td>
-        <td>1/2/3/4</td>
-        <td>Hiçbiri</td>
-        <td>Hiçbiri</td>
-        <td>3</td>
-        <td>-</td>
-      </tr>
-      <tr>
-        <td>Bilişim Hukuku</td>
-        <td>1/2/3/4</td>
-        <td>1/2/3/4</td>
-        <td>-</td>
-        <td>Hepsi</td>
-        <td>Hepsi</td>
-      </tr>
-      <tr>
-        <td>Web'de Telif Hakları ve Etik</td>
-        <td>1/2/3/4</td>
-        <td>1/2</td>
-        <td>3/4</td>
-        <td>3</td>
-        <td>Hepsi</td>
-      </tr>
-      <tr>
-        <td>Ağ Yönetimi ve Bilgi Güvenliği</td>
-        <td>1/2/3/4</td>
-        <td>Hiçbiri</td>
-        <td>Hiçbiri</td>
-        <td>3</td>
-        <td>Hepsi</td>
-      </tr>
-      <tr>
-        <td>Veritabanı Programlama</td>
-        <td>1/2/3/4</td>
-        <td>Hiçbiri</td>
-        <td>Hiçbiri</td>
-        <td>3</td>
-        <td>Hepsi</td>
-      </tr>
-      <tr>
-        <td>İngilizce II</td>
-        <td>1/2/3/4/5/6</td>
-        <td>Hiçbiri</td>
-        <td>Hiçbiri</td>
-        <td>Hepsi</td>
-        <td>Hepsi</td>
-      </tr>
-    </table>
+        <div class="table-box">
+            <table>
+                <tr>
+                    <th>Ders Adı</th>
+                    <th>Ünite</th>
+                    <th>Tamamlanan</th>
+                    <th>Devam Eden</th>
+                    <th>Kaç Canlı Ders Kaydı Var?</th>
+                    <th>Kaç Konu Tabanlı Video Var?</th>
+                </tr>
+                <tr>
+                    <td>İleri Programlama I</td>
+                    <td>1/2/3/4</td>
+                    <td>Hiçbiri</td>
+                    <td>Hiçbiri</td>
+                    <td>3</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Bilişim Hukuku</td>
+                    <td>1/2/3/4</td>
+                    <td>1/2/3/4</td>
+                    <td>-</td>
+                    <td>Hepsi</td>
+                    <td>Hepsi</td>
+                </tr>
+                <tr>
+                    <td>Web'de Telif Hakları ve Etik</td>
+                    <td>1/2/3/4</td>
+                    <td>1/2</td>
+                    <td>3/4</td>
+                    <td>3</td>
+                    <td>Hepsi</td>
+                </tr>
+                <tr>
+                    <td>Ağ Yönetimi ve Bilgi Güvenliği</td>
+                    <td>1/2/3/4</td>
+                    <td>Hiçbiri</td>
+                    <td>Hiçbiri</td>
+                    <td>3</td>
+                    <td>Hepsi</td>
+                </tr>
+                <tr>
+                    <td>Veritabanı Programlama</td>
+                    <td>1/2/3/4</td>
+                    <td>Hiçbiri</td>
+                    <td>Hiçbiri</td>
+                    <td>3</td>
+                    <td>Hepsi</td>
+                </tr>
+                <tr>
+                    <td>İngilizce II</td>
+                    <td>1/2/3/4/5/6</td>
+                    <td>Hiçbiri</td>
+                    <td>Hiçbiri</td>
+                    <td>Hepsi</td>
+                    <td>Hepsi</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
 </body>
 </html>
